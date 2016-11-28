@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+        <div class="jumbotron">
+         <p class="text-left"><img src="/images/logo.png" height="70" width="212" align="left"/><img src="/images/blog.png" height="70" width="212" align="left" /></p>
+           <h3>&nbsp&nbsp&nbsp</h3>
+             @*<h2>&nbsp&nbsp&nbsp Blog Project</h2>*@
+         </div>
+
+
+@model List<BlogJuneMVC.Models.Post>
+<section class="row">
+    @foreach (var post in Model)
+    {
+        <article class="post col-md-4">
+            <h2><a href="/Posts/Details/@post.Id">@Html.DisplayFor(model => model.Title)</a></h2>
+            <div>
+                Posted on <i>@post.Date</i>
+                @if (post.Author != null)
+                {
+                    @:by <i>@post.Author.FirstName (@post.Author.UserName)</i>
+                }
+            </div>
+
+          
+        </article>
+    }
+</section>
+
+
