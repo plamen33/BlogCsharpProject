@@ -13,7 +13,7 @@
     @foreach (var post in Model)
     {
         <article class="post col-md-4">
-            <h2><a href="/Posts/Details/@post.Id">@Html.DisplayFor(model => model.Title)</a></h2>
+            <h2><a href="/Posts/Details/@post.Id">@BlogJuneMVC.Classes.Utils.CutText(post.Title, 20)</a></h2>
             <div>
                 Posted on <i>@post.Date</i>
                 @if (post.Author != null)

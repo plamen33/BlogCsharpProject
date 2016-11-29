@@ -35,7 +35,8 @@
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-             @Html.DisplayFor(modelItem => item.Body)
+           @BlogJuneMVC.Classes.Utils.CutText(item.Body, 200)
+             @*@Html.DisplayFor(modelItem => item.Body)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Date)
