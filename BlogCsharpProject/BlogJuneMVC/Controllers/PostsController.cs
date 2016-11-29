@@ -10,7 +10,8 @@ using BlogJuneMVC.Models;
 
 namespace BlogJuneMVC.Controllers
 {
-   
+   [ValidateInput(false)]
+    // we can validate text with html
     public class PostsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -48,6 +49,8 @@ namespace BlogJuneMVC.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+		[Authorize]
+        [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "Id,Title,Body,Date")] Post post)
         public ActionResult Create([Bind(Include = "Id,Title,Body")] Post post)
@@ -58,6 +61,7 @@ namespace BlogJuneMVC.Controllers
                 {
                     post.Author = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
                     db.Posts.Add(post);
+					post.Date = DateTime.Now;
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -90,6 +94,8 @@ namespace BlogJuneMVC.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+		[ValidateInput(false)]
+		[Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Title,Body,Date")] Post post)
         {
@@ -103,6 +109,7 @@ namespace BlogJuneMVC.Controllers
         }
 
         // GET: Posts/Delete/5
+		[Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -118,6 +125,7 @@ namespace BlogJuneMVC.Controllers
         }
 
         // POST: Posts/Delete/
+		[Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
