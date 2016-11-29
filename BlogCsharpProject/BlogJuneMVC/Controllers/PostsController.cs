@@ -39,7 +39,7 @@ namespace BlogJuneMVC.Controllers
         }
 
         // GET: Posts/Create
-   
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -75,6 +75,7 @@ namespace BlogJuneMVC.Controllers
         }
 
         // GET: Posts/Edit/5
+		[Authorize(Roles = "Administrators")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -95,7 +96,7 @@ namespace BlogJuneMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
 		[ValidateInput(false)]
-		[Authorize]
+		[Authorize(Roles = "Administrators")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Title,Body,Date")] Post post)
         {
@@ -109,7 +110,7 @@ namespace BlogJuneMVC.Controllers
         }
 
         // GET: Posts/Delete/5
-		[Authorize]
+		[Authorize(Roles = "Administrators")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -125,7 +126,7 @@ namespace BlogJuneMVC.Controllers
         }
 
         // POST: Posts/Delete/
-		[Authorize]
+		[Authorize(Roles = "Administrators")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

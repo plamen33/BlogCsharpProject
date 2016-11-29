@@ -26,6 +26,7 @@ namespace BlogJuneMVC.Models
 
         [Required]
 		[DataType(DataType.MultilineText)] // making the field Body - multiline, not just line
+		[Display(Name = "Content")]         // this will make Content to appear instead of Body
         public string Body { get; set; }
 
         [Required]
