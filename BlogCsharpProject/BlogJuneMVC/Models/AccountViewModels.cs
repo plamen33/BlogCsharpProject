@@ -67,7 +67,7 @@ namespace BlogJuneMVC.Models
     {
         [Required]
         [RegularExpression(@"^\S*$", ErrorMessage = "No white space allowed")]
-        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
         [Display(Name = "Username")]
         public string UserName { get; set; }
 

@@ -32,7 +32,8 @@
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
+        @Html.Partial("_Notifications") @*this is needed to fire the Notifications*@
+		@RenderBody()
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - <b>C# Blog. Software Development Project.</b><img src="/images/hack to the future.png" height="100" width="120" align="left" /></p>

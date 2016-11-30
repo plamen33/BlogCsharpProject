@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BlogJuneMVC.Models;
+using BlogJuneMVC.Extensions;
 
 namespace BlogJuneMVC.Controllers
 {
@@ -79,6 +80,7 @@ namespace BlogJuneMVC.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    this.AddNotification("You have logged in the Hack to the Future Blog !", NotificationType.SUCCESS);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -169,6 +171,7 @@ namespace BlogJuneMVC.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
+                    this.AddNotification("Successful registration!", NotificationType.SUCCESS);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -398,6 +401,7 @@ namespace BlogJuneMVC.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            this.AddNotification("You have logged off !", NotificationType.WARNING);
             return RedirectToAction("Index", "Home");
         }
 

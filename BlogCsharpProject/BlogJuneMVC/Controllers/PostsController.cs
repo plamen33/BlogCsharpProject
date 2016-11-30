@@ -7,10 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BlogJuneMVC.Models;
+using BlogJuneMVC.Extensions;
 
 namespace BlogJuneMVC.Controllers
 {
-   [ValidateInput(false)]
+    [ValidateInput(false)]
     // we can validate text with html
     public class PostsController : Controller
     {
@@ -49,7 +50,7 @@ namespace BlogJuneMVC.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-		[Authorize]
+        [Authorize]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "Id,Title,Body,Date")] Post post)
@@ -61,8 +62,9 @@ namespace BlogJuneMVC.Controllers
                 {
                     post.Author = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
                     db.Posts.Add(post);
-					post.Date = DateTime.Now;
+                    post.Date = DateTime.Now;
                     db.SaveChanges();
+                    this.AddNotification("Post created!", NotificationType.INFO);
                     return RedirectToAction("Index");
                 }
             }
@@ -75,7 +77,7 @@ namespace BlogJuneMVC.Controllers
         }
 
         // GET: Posts/Edit/5
-		[Authorize(Roles = "Administrators")]
+        [Authorize(Roles = "Administrators")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -95,8 +97,8 @@ namespace BlogJuneMVC.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-		[ValidateInput(false)]
-		[Authorize(Roles = "Administrators")]
+        [ValidateInput(false)]
+        [Authorize(Roles = "Administrators")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Title,Body,Date")] Post post)
         {
@@ -104,13 +106,14 @@ namespace BlogJuneMVC.Controllers
             {
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
+                this.AddNotification("Post edited!", NotificationType.INFO);
                 return RedirectToAction("Index");
             }
             return View(post);
         }
 
         // GET: Posts/Delete/5
-		[Authorize(Roles = "Administrators")]
+        [Authorize(Roles = "Administrators")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -126,7 +129,7 @@ namespace BlogJuneMVC.Controllers
         }
 
         // POST: Posts/Delete/
-		[Authorize(Roles = "Administrators")]
+        [Authorize(Roles = "Administrators")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -134,6 +137,7 @@ namespace BlogJuneMVC.Controllers
             Post post = db.Posts.Find(id);
             db.Posts.Remove(post);
             db.SaveChanges();
+            this.AddNotification("Post deleted!", NotificationType.SUCCESS);
             return RedirectToAction("Index");
         }
 
