@@ -54,7 +54,7 @@ namespace BlogJuneMVC.Controllers
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "Id,Title,Body,Date")] Post post)
-        public ActionResult Create([Bind(Include = "Id,Title,Body")] Post post)
+        public ActionResult Create([Bind(Include = "Id,Title,Body,Category,Tags,Author")] Post post)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace BlogJuneMVC.Controllers
         [ValidateInput(false)]
         [Authorize(Roles = "Administrators")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Body,Date")] Post post)
+        public ActionResult Edit([Bind(Include = "Id,Title,Body,Category,Date,Tags")] Post post)
         {
             if (ModelState.IsValid)
             {

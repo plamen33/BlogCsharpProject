@@ -32,6 +32,11 @@ namespace BlogJuneMVC.Models
         [Required]
         public DateTime Date { get; set; }
 
+        [Required]
+        public string Category { get; set; }
+        [Required]
+        public string Tags { get; set; }
+
         //public string Author_Id { get; set; }
         //[ForeignKey("Author_Id")]
         public ApplicationUser Author { get; set; }

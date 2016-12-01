@@ -23,7 +23,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Author)
         </th>
-       
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Category)
+        </th>
         <th>
             Actions
         </th>
@@ -32,17 +34,23 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
+            <a href="../../Posts/Details/@item.Id">@BlogJuneMVC.Classes.Utils.CutText(item.Title, 33)</a>
+            @*@Html.DisplayFor(modelItem => item.Title)*@
         </td>
         <td>
-           @BlogJuneMVC.Classes.Utils.CutText(item.Body, 200)
+           @BlogJuneMVC.Classes.Utils.CutText(item.Body, 70)
              @*@Html.DisplayFor(modelItem => item.Body)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Date)
         </td>
         <td>
+            @if (item.Author == null)
+            { <i>No Author</i> }
             @Html.DisplayFor(modelItem => item.Author.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
         </td>
       
         <td>
@@ -50,7 +58,8 @@
             @Html.ActionLink("Details", "Details", new { id=item.Id })
            
         </td> 
-             @if (User.IsInRole("Administrators"))
+
+        @if (User.IsInRole("Administrators"))
         {
             <td>
                 @Html.ActionLink("Edit ", "Edit", new { id = item.Id })
@@ -61,3 +70,5 @@
 }
 
 </table>
+
+@*@if (User.IsInRole("Administrator") || item.Author != null && User.Identity.Name == item.Author.UserName)*@
