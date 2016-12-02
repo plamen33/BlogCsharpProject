@@ -9,10 +9,11 @@
 
 @using (Html.BeginForm()) 
 {
+    <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" /> @*needed to return to page of Index*@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Post</h4>
+        <h4>New Post Creation</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -69,7 +70,8 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    <a class="text" href="@ViewBag.returnUrl">Back</a> 
+     @*@Html.ActionLink("Back to Posts", "Index")*@
 </div>
 
 @section Scripts {

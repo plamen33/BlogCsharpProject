@@ -1,40 +1,53 @@
-﻿@model IEnumerable<BlogJuneMVC.Models.Post>
+﻿@*@model IEnumerable<BlogJuneMVC.Models.Post>*@
+@*Paging Implementation:*@
+
+@model PagedList.IPagedList<BlogJuneMVC.Models.Post>
+@using Microsoft.AspNet.Identity
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
+<h2>Index of Posts</h2>
+<div class="container">
+    <a href="@Url.Action("Create", "Posts")"><span class="btn btn-default">Create New Post</span></a>
+</div>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
+</p>*@
+<br />
+
+<table height="407" width="1000" class="table">
+    <tr height="37">
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Body)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Author)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Body)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Category)
         </th>
         <th>
-            Actions
+            @Html.ActionLink("Date", "Index", new {sortBy = ViewBag.SortDateParameter })
+            @*@Html.DisplayNameFor(model => model.FirstOrDefault().Date)*@
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Author)
+        </th>
+        <th>
+            @Html.DisplayName("Actions")
+        </th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
             <a href="../../Posts/Details/@item.Id">@BlogJuneMVC.Classes.Utils.CutText(item.Title, 33)</a>
+            @*@BlogJuneMVC.Classes.Utils.CutText(item.Title, 33)*@
             @*@Html.DisplayFor(modelItem => item.Title)*@
         </td>
         <td>
@@ -42,15 +55,16 @@
              @*@Html.DisplayFor(modelItem => item.Body)*@
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Date)
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @item.Date.ToShortDateString()
+            @*@Html.DisplayFor(modelItem => item.Date)*@
         </td>
         <td>
             @if (item.Author == null)
             { <i>No Author</i> }
             @Html.DisplayFor(modelItem => item.Author.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category)
         </td>
       
         <td>
@@ -70,5 +84,11 @@
 }
 
 </table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortBy = Request["sortBy"] }))
+
+ @*Explanations: sortBy = Request["sortBy"] - we have to pass the parameter sortBy so not to lose the sorting when going through pages*@
 
 @*@if (User.IsInRole("Administrator") || item.Author != null && User.Identity.Name == item.Author.UserName)*@

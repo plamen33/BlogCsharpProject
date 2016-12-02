@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using BlogJuneMVC.Models;
 using BlogJuneMVC.Extensions;
+using PagedList;
 
 namespace BlogJuneMVC.Controllers
 {
@@ -17,11 +18,29 @@ namespace BlogJuneMVC.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Posts
-        public ActionResult Index()
+          // GET: Posts
+        public ActionResult Index(int? page, string sortBy)
         {
-            var posts = db.Posts.Include(p => p.Author).ToList();
-            return View(posts);
+            ViewBag.SortDateParameter = string.IsNullOrEmpty(sortBy) ? "Date asc" : "";
+
+            var posts = db.Posts.AsQueryable();
+            posts = posts.Include(p => p.Author);
+            int pageSize = 10; // pageSize is 10 - we will see 10 posts on a page
+            int pageNumber = (page ?? 1); // means if the page is null use 1 or if not use whatever parameter page is
+
+            switch (sortBy)
+            {
+                case "Date asc": posts = posts.OrderBy(x => x.Date); break;
+                default:
+                    posts = posts.OrderByDescending(x => x.Date); break;
+                    
+            }
+
+
+            return View(posts.ToPagedList(page ?? pageNumber, pageSize));
+
+
+            //return View(posts);
         }
 
         // GET: Posts/Details/5
@@ -31,7 +50,7 @@ namespace BlogJuneMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Post post = db.Posts.Find(id);
+            Post post = db.Posts.Include(p => p.Author).SingleOrDefault(x => x.Id == id);
             if (post == null)
             {
                 return HttpNotFound();
@@ -39,10 +58,11 @@ namespace BlogJuneMVC.Controllers
             return View(post);
         }
 
-        // GET: Posts/Create
+       // GET: Posts/Create
         [Authorize]
         public ActionResult Create()
         {
+            ViewBag.returnUrl = Request.UrlReferrer; // to return to page of Index
             return View();
         }
 
@@ -54,18 +74,20 @@ namespace BlogJuneMVC.Controllers
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "Id,Title,Body,Date")] Post post)
-        public ActionResult Create([Bind(Include = "Id,Title,Body,Category,Tags,Author")] Post post)
+        public ActionResult Create([Bind(Include = "Id,Title,Body,Category,Tags,Author")] Post post, string returnUrl) // ", string returnUrl" neeeded to return to page number of Index
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     post.Author = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
-                    db.Posts.Add(post);
                     post.Date = DateTime.Now;
+                    db.Posts.Add(post);
                     db.SaveChanges();
                     this.AddNotification("Post created!", NotificationType.INFO);
-                    return RedirectToAction("Index");
+                    if (returnUrl == null || returnUrl == "") { return RedirectToAction("Index"); }
+                    return Redirect(returnUrl); // neeeded to return to page number of Index 
+                    //return RedirectToAction("Index");
                 }
             }
             catch (DataException)
@@ -77,7 +99,8 @@ namespace BlogJuneMVC.Controllers
         }
 
         // GET: Posts/Edit/5
-        [Authorize(Roles = "Administrators")]
+        // [Authorize(Roles = "Administrators")]
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -89,8 +112,9 @@ namespace BlogJuneMVC.Controllers
             {
                 return HttpNotFound();
             }
-
+            ViewBag.returnUrl = Request.UrlReferrer; // to return to page of Index
             return View(post);
+            
         }
 
         // POST: Posts/Edit/5
@@ -98,22 +122,28 @@ namespace BlogJuneMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateInput(false)]
-        [Authorize(Roles = "Administrators")]
+        //[Authorize(Roles = "Administrators")]
+        //[Authorize(Roles = "TrustedUser")]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Body,Category,Date,Tags")] Post post)
+        public ActionResult Edit([Bind(Include = "Id,Title,Body,Category,Date,Tags")] Post post, string returnUrl)  // ", string returnUrl" neeeded to return to page number of Index
         {
             if (ModelState.IsValid)
             {
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
                 this.AddNotification("Post edited!", NotificationType.INFO);
-                return RedirectToAction("Index");
+                if (returnUrl == null || returnUrl == "") { return RedirectToAction("Index"); }
+                return Redirect(returnUrl); // neeeded to return to page number of Index 
+                //return RedirectToAction("Index");
             }
             return View(post);
         }
 
         // GET: Posts/Delete/5
-        [Authorize(Roles = "Administrators")]
+        //[Authorize(Roles = "Administrators")]
+        //[Authorize(Roles = "TrustedUser")]
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -125,20 +155,25 @@ namespace BlogJuneMVC.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.returnUrl = Request.UrlReferrer; // to return to page of Index
             return View(post);
         }
 
         // POST: Posts/Delete/
-        [Authorize(Roles = "Administrators")]
+        //[Authorize(Roles = "Administrators")]
+        //[Authorize(Roles = "TrustedUser")]
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, string returnUrl) // ", string returnUrl" neeeded to return to page number of Index
         {
             Post post = db.Posts.Find(id);
             db.Posts.Remove(post);
             db.SaveChanges();
             this.AddNotification("Post deleted!", NotificationType.SUCCESS);
-            return RedirectToAction("Index");
+            if (returnUrl == null || returnUrl == "") { return RedirectToAction("Index"); }
+            return Redirect(returnUrl); // neeeded to return to page number of Index 
+            //return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
