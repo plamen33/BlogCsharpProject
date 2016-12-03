@@ -40,6 +40,8 @@ namespace BlogJuneMVC.Models
         //public string Author_Id { get; set; }
         //[ForeignKey("Author_Id")]
         public ApplicationUser Author { get; set; }
+		
+		 public int Count { get; set; }   // hit counter
 
      
     }

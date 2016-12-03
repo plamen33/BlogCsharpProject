@@ -55,6 +55,8 @@ namespace BlogJuneMVC.Controllers
             {
                 return HttpNotFound();
             }
+			post.Count = post.Count + 1;
+            db.SaveChanges();
             return View(post);
         }
 
