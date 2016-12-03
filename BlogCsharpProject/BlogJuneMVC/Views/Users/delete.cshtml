@@ -1,0 +1,50 @@
+﻿@model BlogJuneMVC.Models.ApplicationUser
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Admin Panel - Delete User</h2>
+
+<div class="alert alert-danger">
+    <h4><strong>Warning!</strong> You are about to delete this user. Are you sure ?</h4>
+</div>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> 
+            <a class="btn btn-default" href="@Url.Action("Index", "Users")">Back to List</a>
+            @*@Html.ActionLink("Back to List", "Index")*@
+        </div>
+    }
+</div>

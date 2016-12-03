@@ -1,0 +1,80 @@
+﻿@model BlogJuneMVC.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Admin Panel - Edit user</h2>
+<div class="alert alert-warning">
+    <h4>
+        Attention ! You are about to edit this User.
+    </h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Roles, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select class="form-control" name="RoleId" id="Roles">
+                    
+                    @foreach (var role in ViewBag.Roles)
+                    {
+                        
+                        if (Model.Roles.Any() && Model.Roles.SingleOrDefault().RoleId == role.Id)
+                        {
+                            <option selected value="@role.Id">@role.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@role.Id">@role.Name</option>
+                           
+                        }
+
+                    }
+                </select>
+                @Html.ValidationMessageFor(model => model.Roles, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-warning" />
+                <a class="btn btn-default" href="@Url.Action("Index", "Users")">Back to List</a>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@

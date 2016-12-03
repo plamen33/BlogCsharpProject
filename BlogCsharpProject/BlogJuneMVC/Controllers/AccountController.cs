@@ -158,7 +158,8 @@ namespace BlogJuneMVC.Controllers
                     UserName = model.UserName,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    Email = model.Email
+                    Email = model.Email,
+                  
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -170,6 +171,9 @@ namespace BlogJuneMVC.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    // add user to User Role - User:
+                    UserManager.AddToRole(user.Id, "User");
 
                     this.AddNotification("Successful registration!", NotificationType.SUCCESS);
                     return RedirectToAction("Index", "Home");
@@ -400,6 +404,7 @@ namespace BlogJuneMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+           
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             this.AddNotification("You have logged off !", NotificationType.WARNING);
             return RedirectToAction("Index", "Home");

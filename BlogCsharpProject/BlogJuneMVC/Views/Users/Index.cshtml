@@ -1,0 +1,77 @@
+﻿@using System.Diagnostics.Eventing.Reader
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using BlogJuneMVC.Classes
+@model IEnumerable<BlogJuneMVC.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Admin Panel - Users</h3>
+<div class="container">
+    <p class="text-left"><img src="~/images/Globe.png" height="77" width="77" align="left" /></p>
+    <p class="text-center"><img src="~/images/authorized_only.jpg" height="77" width="100" align="middle" /></p>
+    <a href="@Url.Action("Create", "Users")"><span class="btn btn-default">Create New</span></a>
+</div>
+
+@*@Html.ActionLink("Create New", "Create")*@
+<br />
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Roles)
+        </th>
+        <th>
+            Actions
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>*@
+            <td>
+                @foreach (IdentityRole role in item.GetUserRoles())
+                {
+                    @Html.DisplayFor(modelItem => role.Name)
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
