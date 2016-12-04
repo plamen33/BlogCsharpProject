@@ -46,6 +46,26 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+
+   <script>
+    $().ready(function() {
+
+        $.datepicker.setDefaults($.datepicker.regional["en-GB"]);
+
+        $( "#datepicker" ).datepicker();
+
+        // validate date form
+        $("#dateForm").validate({
+            rules: {
+                datepicker: {
+                    required: true,
+                    date: true
+                }
+            }
+        });
+    });
+    </script>
+
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     
