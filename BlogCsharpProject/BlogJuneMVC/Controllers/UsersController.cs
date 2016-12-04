@@ -86,7 +86,7 @@ namespace BlogJuneMVC.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,
-                 
+
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -171,14 +171,33 @@ namespace BlogJuneMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
+
+            //// if the Admin User delete himself
+            if (id == User.Identity.GetUserId())
+            {
+                this.AddNotification("You cannot delete yourself - Code Forbidden! Mace Windu.", NotificationType.ERROR);
+                this.AddNotification("You want to break my code - NOT THIS TIME !", NotificationType.WARNING);
+                return RedirectToAction("Index");
+            }
+            else
+            {
                 ApplicationUser user = db.Users.Find(id);
+
+                // remove posts from users
+                foreach (var item in db.Posts)
+                {
+                    if (item.Author == user)
+                    { db.Posts.Remove(item); }
+                }
+         
 
                 // now remove the user himself
                 db.Users.Remove(user);
                 db.SaveChanges();
                 this.AddNotification("User deleted!", NotificationType.SUCCESS);
                 return RedirectToAction("Index");
-            
+            }
+
         }
 
         protected override void Dispose(bool disposing)
