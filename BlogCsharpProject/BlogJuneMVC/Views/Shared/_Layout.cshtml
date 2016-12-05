@@ -46,24 +46,25 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    @*This script fixes the Edit post date representation Javascript jquery.validate.js issue*@
+    @* If you remove it - prog will work but you will have to input date as per restriction rules of the jquery script *@
+    <script>
+        $(function () {
+            $.validator.methods.date = function (value, element) {
+                if ($.browser.webkit) {
 
-   <script>
-    $().ready(function() {
+                    //ES - Chrome does not use the locale when new Date objects instantiated:
+                    var d = new Date();
 
-        $.datepicker.setDefaults($.datepicker.regional["en-GB"]);
-
-        $( "#datepicker" ).datepicker();
-
-        // validate date form
-        $("#dateForm").validate({
-            rules: {
-                datepicker: {
-                    required: true,
-                    date: true
+                    return this.optional(element) || !/Invalid|NaN/.test(new Date(d.toLocaleDateString(value)));
                 }
-            }
+                else {
+
+                    return this.optional(element) || !/Invalid|NaN/.test(new Date(value));
+                }
+            };
         });
-    });
+
     </script>
 
     @Scripts.Render("~/bundles/bootstrap")
