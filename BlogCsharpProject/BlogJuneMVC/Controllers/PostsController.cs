@@ -62,7 +62,33 @@ namespace BlogJuneMVC.Controllers
             db.SaveChanges();
             return View(post);
         }
+         //GET: Search in Posts
+        public ActionResult Search(string search, string TagSearch)
+        {
 
+            if (TagSearch == "Tags" && !String.IsNullOrEmpty(search))
+            {
+                var result = db.Posts.Include(p => p.Author).Where(p => p.Tags.Contains(search));
+
+                return View(result);
+            }
+            else if (TagSearch != "Tags" && !String.IsNullOrEmpty(search))
+            {
+                var postsBody = db.Posts.Include(p => p.Author).Where(p => p.Body.Contains(search)).ToList();
+                var postsTitle = db.Posts.Include(p => p.Author).Where(p => p.Title.Contains(search)).ToList();
+                var result = postsBody.Concat(postsTitle).Distinct().ToList();  // without distinct 2 equal post could appear
+                return View(result);
+            }
+            else
+            {
+                //var result = db.Posts.Where(p => p.Tags != "").ToList();
+                //return View(result);
+                var result = db.Posts.Where(p => p.Title.Equals("Title is empty")).ToList();
+                return View(result);
+
+            }
+
+        }
        // GET: Posts/Create
         [Authorize]
         public ActionResult Create()

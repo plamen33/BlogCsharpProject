@@ -1,0 +1,234 @@
+﻿@model IEnumerable<BlogJuneMVC.Models.Post>
+@using Microsoft.AspNet.Identity
+
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search in Posts</h2>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+<p>
+    @using (Html.BeginForm("Search", "Posts", FormMethod.Get))
+    {
+        <b>Choose Search Type&nbsp;&nbsp;</b>
+        @Html.RadioButton("TagSearch", "Tags", true)<text>Tag Search</text>
+        @Html.RadioButton("TagSearch", "Search", false)<text>Common Search</text>
+        <br />
+        @Html.TextBox("search") <input type="submit" value="Search" size="14" px />
+    }
+</p>
+
+    @if (Model.Count() == 0)
+    {
+        <div class="container">
+            <a href="#" title="Tag Search Tips" data-toggle="popover" data-placement="bottom" data-content="1. For optimal Tag Search results - use only one word, as a tag. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "></a>
+            &nbsp;
+           
+        </div>
+        @section Scripts
+      {
+        <script type="text/javascript">
+            $("[data-toggle='popover']").each(function () {
+                $(this).popover({
+                    title: $(this).data("valMsgFor"),
+                    content: $(this).text()
+                })
+                .html("<p class='btn btn-success'>Tag Search Help</p>");
+       }
+             );
+        </script>
+     }
+    }
+    else
+    {
+        <div class="container">
+            <a href="#" title="Tag Search Tips" data-toggle="popover" data-placement="bottom" data-content="1. For optimal Tag Search results - use only one word, as a tag. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "></a>
+            &nbsp;
+            &nbsp;
+        </div>
+        @section Scripts
+      {
+            <script type="text/javascript">
+            $("[data-toggle='popover']").each(function () {
+                $(this).popover({
+                    title: $(this).data("valMsgFor"),
+                    content: $(this).text()
+                })
+                .html("<p class='btn btn-success'>Tag Search Help</p>");
+            }
+             );
+            </script>
+        }
+        <br />
+        <div class="alert alert-success">
+            @Model.Count() results found.
+        </div>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Body)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayName("Actions")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tags)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                    @*@Html.DisplayNameFor(model => model.Comments)*@
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="../../Posts/Details/@item.Id">@BlogJuneMVC.Classes.Utils.CutText(item.Title, 33)</a>
+                        @*@Html.DisplayFor(modelItem => item.Title)*@
+                    </td>
+                    <td>
+                        @BlogJuneMVC.Classes.Utils.CutText(item.Body, 77)
+                        @*@Html.DisplayFor(modelItem => item.Body)*@
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                Action Panel
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li class="alert-warning">@Html.ActionLink("Details", "Details", new { id = item.Id })</li>
+                                @if (User.IsInRole("Administrators"))
+                                {
+
+                                    <li class="alert-warning">@Html.ActionLink("Edit ", "Edit", new { id = item.Id })</li>
+                                    <li class="alert-danger">@Html.ActionLink(" Delete", "Delete", new { id = item.Id })</li>
+                                }
+                                @if (User.IsInRole("TrustedUser") && item.Author.UserName == User.Identity.GetUserName())
+                                {
+                                    <li class="alert-warning">@Html.ActionLink("Edit ", "Edit", new { id = item.Id })</li>
+                                    <li class="alert-danger">@Html.ActionLink(" Delete", "Delete", new { id = item.Id })</li>
+                                }
+                            </ul>
+                        </div>
+                    </td>
+
+                    <td>
+                        @BlogJuneMVC.Classes.Utils.CutText(item.Tags, 10)
+                        @*@Html.DisplayFor(model => item.Tags)*@
+                    </td>
+                    <td>
+                        @if (item.Author == null)
+                    { <i>No Author</i> }
+                        @Html.DisplayFor(modelItem => item.Author.UserName)
+                    </td>
+
+
+                </tr>
+            }
+
+
+        </table>
+
+    }
+
+
+@* Old version of my help buttons *@
+@*<div class="container">
+    <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#demo">Tag Search Help</button>
+    <div id="demo" class="collapse">
+        <h4 class="alert-success"> 1. For optimal Tag Search results - use only one word, as a tag</h4>
+        <h4 class="alert-warning"> 2. Check out the 30 most popular Tags</h4>
+    </div>
+    <a href="~/Posts/DisplayTags" class="btn btn-warning" role="button">Most Popular Tags</a>
+</div>*@
+@*============================== *@
+
+    @*@Html.ActionLink("Details", "Details", new { id = item.Id })
+        @if (User.IsInRole("Administrators"))
+        {
+            @Html.ActionLink("Edit ", "Edit", new { id = item.Id })
+            @Html.ActionLink(" Delete", "Delete", new { id = item.Id })*@
+
+    @*@Html.ActionLink("Details", "Details", new { id = item.Id })
+        @if (User.IsInRole("Administrators"))
+        {
+            @Html.ActionLink("Edit ", "Edit", new { id = item.Id })
+            @Html.ActionLink(" Delete", "Delete", new { id = item.Id })
+        }*@
+
+
+    @*<div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                Tutorials
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">Normal</a></li>
+                <li class="disabled"><a href="#">Disabled</a></li>
+                <li class="active"><a href="#">Active</a></li>
+                <li><a href="#">Normal</a></li>
+            </ul>
+        </div>*@
+
+
+    @*@if (User.IsInRole("Administrator") || item.Author != null && User.Identity.Name == item.Author.UserName)*@
+
+
+    @*@Html.DisplayFor(modelItem => item.Comments.Count)*@
+
+    @*<div class="container">
+            <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#demo">Most Popular Tags</button>
+            <div id="demo" class="collapse">
+                <h4 class="alert-success">
+                    @foreach (var item in Model)
+                    {
+                        @Html.DisplayFor(modelItem => item.Tags);
+                    }
+                </h4>
+            </div>
+        </div>
+        @Html.DisplayFor(model => model.FirstOrDefault().Tags)
+
+           foreach (var item in Model)
+          {
+        @Html.DisplayFor(modelItem => item.Tags);
+            }
+            //// Most popular tag organization in List TagList
+            //List<string>
+            taglist = post.Tags.Split(new char[] { ' '}, StringSplitOptions.RemoveEmptyEntries).ToList();
+            //taglist.GroupBy(x => x).OrderByDescending(a => a.Count());
+            //var result = taglist.Distinct().Take(30).ToList();
+            //foreach (var tag in taglist)
+            //{
+            //    post.TagList.Add(tag);
+            //}
+
+            //List<string>
+                taglist1 = new List<string>
+                    ();
+                    //foreach (var item in Model)
+                    //{
+                    //    taglist1.Add(item.Tags);
+                    //}
+                    //string tagString = string.Join(" ", taglist1);
+                    //List<string>
+                        taglist2 = tagString.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                        //taglist2.GroupBy(x => x).OrderByDescending(a => a.Count());
+                        //var result = taglist2.Distinct().Take(30).ToList();*@

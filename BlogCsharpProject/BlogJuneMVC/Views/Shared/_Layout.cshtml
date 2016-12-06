@@ -26,6 +26,7 @@
                     <li>@Html.ActionLink("Posts", "Index", "Posts")</li>
                     <li>@Html.ActionLink("New Post", "Create", "Posts")</li>
                     <li>@Html.ActionLink("Comments", "Index", "Comments")</li>
+					<li>@Html.ActionLink("Search", "Search", "Posts")</li>
                     @if (User.IsInRole("Administrators"))
                     {
                         <li>@Html.ActionLink("Users", "Index", "Users")</li>
