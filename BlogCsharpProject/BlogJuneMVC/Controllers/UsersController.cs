@@ -189,7 +189,13 @@ namespace BlogJuneMVC.Controllers
                     if (item.Author == user)
                     { db.Posts.Remove(item); }
                 }
-         
+                // remove comments by the user:
+                foreach (var item in db.Comments)
+                {
+                    if (item.Author == user)
+                    { db.Comments.Remove(item); }
+                }
+
 
                 // now remove the user himself
                 db.Users.Remove(user);

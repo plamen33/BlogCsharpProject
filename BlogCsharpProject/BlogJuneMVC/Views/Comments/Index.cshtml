@@ -27,10 +27,12 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Post.Title)
+		    @BlogJuneMVC.Classes.Utils.CutText(item.Post.Title, 33)
+            @*@Html.DisplayFor(modelItem => item.Post.Title)*@
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Text)
+		    @BlogJuneMVC.Classes.Utils.CutText(item.Text, 59)
+            @*@Html.DisplayFor(modelItem => item.Text)*@
         </td>
     
         <td>
