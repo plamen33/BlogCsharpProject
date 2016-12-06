@@ -54,6 +54,34 @@
 
     </dl>
 </div>
+
+@*/// Comments add*@
+<div>
+    <div>
+        <h4> @Model.Comments.Count Comments: </h4>
+    </div>
+
+    @foreach (var cm in Model.Comments)
+    {
+        <div style="border-bottom: 1px solid rgba(0, 0, 0, 0.1); margin-bottom: 5px;">
+            @if (cm.Author != null)
+            {
+                <div>
+                    <strong>@cm.Author.UserName</strong> (<i><strong>@cm.Author.UserName</strong></i>)
+                </div>
+            }
+            else
+            {
+                @:By Anonymous
+                                }
+            <div>@cm.Text</div>
+            <div style="font-size: x-small;">
+                Posted on <i>@cm.Date.ToString("dd.MM.yyyy")</i>
+            </div>
+        </div>
+    }
+</div>
+
 <p>@if (User.IsInRole("Administrators"))
 {
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) @:|
@@ -61,4 +89,11 @@
     @Html.ActionLink("Back to List", "Index")
 </p>
 <br />
+@*added for comments:  *@
+<p>
+    <a href="../../Comments/Create/@Model.Id">Add new comment</a> |
+    <a href="../../Comments">Back to Comments</a>
+</p>
+@*@Html.ActionLink("Back to Posts", "Index")*@
+
 <h4 align="center">This post was viewed <span class="label label-default">@Model.Count</span> times.</h4>

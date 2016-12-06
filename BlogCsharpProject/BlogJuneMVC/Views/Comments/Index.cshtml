@@ -1,0 +1,60 @@
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<BlogJuneMVC.Models.Comment>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>All Comments</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Post Title
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>Actions</th>
+        <th>Author</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Post.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Text)
+        </td>
+    
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @if (item.Author.UserName == User.Identity.GetUserName()|| User.IsInRole("Administrators"))
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning"})
+
+            }
+            @if (item.Author.UserName == User.Identity.GetUserName() || User.IsInRole("Administrators"))
+            {
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+            }
+            @Html.ActionLink("Details", "Details", new {id = item.Id}, new {@class = "btn btn-success"})
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Author.UserName)
+        </td>
+    </tr>
+}
+
+</table>
+
+
+@*btn btn-success*@

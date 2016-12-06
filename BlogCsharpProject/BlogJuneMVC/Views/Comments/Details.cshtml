@@ -1,0 +1,97 @@
+﻿@using Microsoft.AspNet.Identity
+@model BlogJuneMVC.Models.Comment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<h4>Comment details</h4>
+<div>
+    <hr />
+
+    <dl class="dl-horizontal">
+        <dt>
+            Post
+        </dt>
+
+        <dd>
+            <a href="../../Posts/Details/@Model.PostId">@Model.Post.Title</a>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Text)
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+    </dl>
+
+    @if ( User.IsInRole("Administrators"))
+                {
+        <div class="form-group">
+            <div class="form-actions no-color">
+                <a class="btn btn-warning" href="@Url.Action("Edit", "Comments", new { id = Model.Id })">Edit</a>
+                <a class="btn btn-default" href="@Url.Action("Index", "Comments")">Back to Comments</a>
+            </div>
+        </div>
+    }
+        @if (User.IsInRole("User") || User.IsInRole("TrustedUser"))
+        {
+            <div class="form-group">
+                <div class="form-actions no-color">
+                    <a class="btn btn-default" href="@Url.Action("Index", "Comments")">Back to Comments</a>
+                </div>
+            </div>
+        }
+
+</div>
+
+<br />
+<br />
+
+@* User.Identity.GetUserName()== Model.Post.Author.ToString() || *@
+
+@*Old functionality:*@
+@*@if (User.IsInRole("Administrators"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) @:|
+        @Html.ActionLink("Back to Comments", "Index")
+    }
+    @if (User.IsInRole("User"))
+    {
+
+        @Html.ActionLink("Back to Comments", "Index")
+    }*@
+
+
+@*@if (User.IsInRole("Administrators"))
+{
+    <div class="form-group">
+        <div class="form-actions no-color">
+            <input type="submit" value="Edit" class="btn btn-warning" />
+            <a class="btn btn-warning" href="@Url.Action("Edit", "Comments")">Edit</a>
+            <a class="btn btn-default" href="@Url.Action("Index", "Comments")">Back to Comments</a>
+        </div>
+    </div>
+}
+@if (User.IsInRole("User"))
+{
+    <div class="form-group">
+        <div class="form-actions no-color">
+            <input type="submit" value="Edit" class="btn btn-warning" />
+            <a class="btn btn-default" href="@Url.Action("Index", "Comments")">Back to Comments</a>
+        </div>
+    </div>
+}*@

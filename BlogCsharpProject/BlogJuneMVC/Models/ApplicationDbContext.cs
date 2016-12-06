@@ -20,7 +20,7 @@ namespace BlogJuneMVC.Models
         }
 
         public System.Data.Entity.DbSet<BlogJuneMVC.Models.Post> Posts { get; set; }
-
+        public System.Data.Entity.DbSet<BlogJuneMVC.Models.Comment> Comments { get; set; }
         //public System.Data.Entity.DbSet<BlogJuneMVC.Models.ApplicationUser> ApplicationUsers { get; set; }
         // public System.Data.Entity.DbSet<MVCBlog.Models.Post> Posts { get; set; }
     }

@@ -10,23 +10,25 @@ namespace BlogJuneMVC.Models
 {
     public class Post
     {
-		// by this we make exact time to be put like in the real blogs - in Posts Controller we will remove the Date field from Create
-		// so by this we won't be able to put Date at Create - it will be an actual one.
+        // c това правим при правене на пост да слага точната дата и време което се прави в реалните блогове
+        // правим промяна и в PostsController-а - махаме полето за слагане на произволна дата при правене на пост
+        // Ot Posts > Create махаме формата за Date - така тя няма да се визуализира
         public Post()
         {
             this.Date = DateTime.Now;
         } 
+         
 
         [Key]
         public int Id { get; set; }
 
         [Required]
-		[StringLength(200)] // we set the value of Title max symbols
+        [StringLength(200)]
         public string Title { get; set; }
 
         [Required]
-		[DataType(DataType.MultilineText)] // making the field Body - multiline, not just line
-		[Display(Name = "Content")]         // this will make Content to appear instead of Body
+        [DataType(DataType.MultilineText)] // making the field Body - multiline, not just line
+        [Display(Name = "Content")]         // this will make Content to appear instead of Body
         public string Body { get; set; }
 
         [Required]
@@ -40,9 +42,10 @@ namespace BlogJuneMVC.Models
         //public string Author_Id { get; set; }
         //[ForeignKey("Author_Id")]
         public ApplicationUser Author { get; set; }
-		
-		 public int Count { get; set; }   // hit counter
+        public List<Comment> Comments { get; set; }   // needed for comments
 
-     
+        public int Count { get; set; }   // hit counter
+
+
     }
 }
