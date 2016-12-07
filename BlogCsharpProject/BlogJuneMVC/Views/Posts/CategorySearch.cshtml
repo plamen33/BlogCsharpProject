@@ -1,0 +1,68 @@
+﻿@model List<BlogJuneMVC.Models.Post>
+@{
+    ViewBag.Title = "Home Page";
+}
+     <div>
+    <p class="text-left"><img src="~/images/Globe.png" height="124" width="124" align="left" /></p>
+    </div>
+    <h3>&nbsp&nbsp&nbsp</h3>
+    <h3 class="text-primary">&nbsp&nbsp&nbsp This Search option is available only for TrustedUsers and Administrators</h3>
+    
+<br />
+
+<div class="post" width ="50">
+    
+    @using (Html.BeginForm("CategorySearch", "Posts", FormMethod.Get))
+    {
+        <b>Posts By Category: &nbsp;&nbsp;</b>
+        @Html.DropDownList("Category", new List<SelectListItem>
+                {
+                new SelectListItem { Text = "Programming", Value="Programming"},
+                new SelectListItem { Text = "Science", Value="Science"},
+                new SelectListItem { Text = "Space", Value="Space"},
+                new SelectListItem { Text = "News", Value="News"},
+                new SelectListItem { Text = "Other", Value="Other"}
+                }, new { @class = "form-control" }
+                )
+        <br />
+        @Html.TextBox("search") <input type="submit" value="Search" size="14" px /><text>&nbsp;</text>
+        <a class="btn btn-default" href="@Url.Action("CategorySearch", "Posts")">Clear results</a>
+        <h4 class="text-primary">To display all the posts from certain Category, please make an empty search.</h4>
+    }
+    </div>
+
+@if (@Model.Count() != 0)
+{
+    <div class="alert alert-success">
+        @Model.Count() results found.
+    </div>
+}
+
+
+    <section class="row">
+        @foreach (var post in Model)
+        {
+            <article class="post col-md-12">
+                <h2><a href="/Posts/Details/@post.Id">@BlogJuneMVC.Classes.Utils.CutText(post.Title, 33)</a></h2>
+                <div class="alert alert-default">
+                    Posted on <i>@post.Date</i>
+                    @if (post.Author != null)
+                {
+                        @:by <i>@post.Author.FirstName (@post.Author.UserName)</i>
+                }
+                    &nbsp&nbsp&nbspCategory: <b>@post.Category</b>
+                </div>
+
+                <p class="alert alert-info">
+                    @BlogJuneMVC.Classes.Utils.CutText(post.Body, 200)
+                </p>
+
+            </article>
+
+
+        }
+    </section>
+
+    <p>&nbsp;
+    <p>&nbsp;
+   @*post col-md-4      B9EBA2           *@

@@ -28,7 +28,10 @@
             <a href="#" title="Tag Search Tips" data-toggle="popover" data-placement="bottom" data-content="1. For optimal Tag Search results - use only one word, as a tag. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Tag Search is case insensitive.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3. Check out the 30 most popular Tags."></a>
             &nbsp;
             <a href="~/Posts/DisplayTags" class="btn btn-warning" role="button">Most Popular Tags</a>
-
+            &nbsp;
+           @if (User.IsInRole("TrustedUser") || User.IsInRole("Administrators"))
+           {  <a href="~/Posts/CategorySearch" class="btn btn-primary" role="button">Search By Category</a>}
+           
         </div>
         @section Scripts
       {
@@ -50,7 +53,9 @@
             <a href="#" title="Tag Search Tips" data-toggle="popover" data-placement="bottom" data-content="1. For optimal Tag Search results - use only one word, as a tag. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Check out the 30 most popular Tags."></a>
             &nbsp;
             <a href="~/Posts/DisplayTags" class="btn btn-warning" role="button">Most Popular Tags</a>
-
+            &nbsp;
+            @if (User.IsInRole("TrustedUser") || User.IsInRole("Administrators"))
+            {  <a href="~/Posts/CategorySearch" class="btn btn-primary" role="button">Search By Category</a>}
         </div>
         @section Scripts
       {

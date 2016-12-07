@@ -87,8 +87,26 @@ namespace BlogJuneMVC.Controllers
                 return View(result);
 
             }
-
         }
+		  // GET: CategorySearch
+        public ActionResult CategorySearch(string Category, string search)
+        {
+            var posts = new List<Post>();
+            if (search == null || search == String.Empty)
+
+            { posts = db.Posts.Include(p => p.Author).Where(p => p.Category == Category).ToList(); }
+            else
+            {
+                var postsBody = db.Posts.Include(p => p.Author).Where(p => p.Category == Category).Where(p => p.Body.Contains(search)).ToList();
+                var postsTitle = db.Posts.Include(p => p.Author).Where(p => p.Category == Category).Where(p => p.Title.Contains(search)).ToList();
+                posts = postsBody.Concat(postsTitle).Distinct().ToList();  // without distinct 2 equal post could appear
+            }
+
+
+            return View(posts);
+        }
+		
+		
        // GET: Posts/Create
         [Authorize]
         public ActionResult Create()
