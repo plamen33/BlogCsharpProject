@@ -207,6 +207,13 @@ namespace BlogJuneMVC.Controllers
             //return RedirectToAction("Index");
         }
 
+		 public ActionResult DisplayTags()
+        {
+            var tagList = db.Posts.Where(p => p.Tags != "").ToList();
+
+            return View(tagList);
+        }
+		
         protected override void Dispose(bool disposing)
         {
             if (disposing)

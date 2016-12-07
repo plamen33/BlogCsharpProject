@@ -1,0 +1,47 @@
+﻿@model IEnumerable<BlogJuneMVC.Models.Post>
+@using Microsoft.AspNet.Identity
+
+
+@{
+    ViewBag.Title = "Display.Tags";
+}
+
+<h2>Most Popular Tags</h2>
+<h4>List of the 30 most popular tags:</h4>
+
+@{
+    List<string> tagsT = new List<string>();
+}
+
+@foreach (var item in Model)
+{
+    @*@Html.DisplayFor(modelItem => item.Tags)
+        <text> </text>*@
+
+    tagsT.Add(item.Tags);
+
+}
+@{
+    string tagString = string.Join(" ", tagsT).ToLower();
+    List<string> taglist2 = tagString.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+    var taglist3 = taglist2.GroupBy(x => x).OrderByDescending(a => a.Count()).Select(g => g.Key);
+    var resultList = taglist3.Distinct().Take(30).ToList();
+    tagString = string.Join(" ", resultList);
+}
+<br />
+@{int n = 1; }
+@foreach (var item in resultList)
+{
+    <p class="text-primary" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@(n).&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item)</p>
+        @*@Html.DisplayFor(modelItem => item) <text> | </text>*@
+    n = n + 1;
+}
+
+<p class="text-primary"></p>
+<br />
+<br />
+<div class="container">
+    <a href="~/Posts/Search" class="btn btn-primary" role="button">Back to Search</a>
+</div>
+
+
