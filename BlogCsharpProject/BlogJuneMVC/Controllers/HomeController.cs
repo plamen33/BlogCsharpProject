@@ -19,5 +19,12 @@ namespace BlogJuneMVC.Controllers
             return View(posts.ToList());
 
         }
+
+          public ActionResult About()
+        {
+            ViewBag.Message = "About the Blog Project";
+
+            return View();
+        }
     }
 }
