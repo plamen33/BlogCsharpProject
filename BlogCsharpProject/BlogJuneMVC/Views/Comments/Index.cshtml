@@ -7,7 +7,34 @@
 
 <h2>All Comments</h2>
 
+@if (User.IsInRole("TrustedUser") || User.IsInRole("Administrators"))
+{
+  <div class="text" width="30">
 
+    @using (Html.BeginForm("", "Comments", FormMethod.Get))
+    {
+        <b>Search in Comments: &nbsp;&nbsp;</b>
+      
+        @Html.TextBox("search") <input type="submit" value="Search" size="14" px /><text>&nbsp;</text>
+        <a class="btn btn-default" href="@Url.Action("", "Comments")">Display All Comments</a>
+        <a href="#" title="About Comment Search" data-toggle="popover" data-placement="bottom" data-content="1. Search is only available for TrustedUsers and Administrators !&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Search engine includes only results in the comment's text."></a>
+    }
+  </div>
+    @section Scripts
+   {
+       <script type="text/javascript">
+            $("[data-toggle='popover']").each(function () {
+                $(this).popover({
+                    title: $(this).data("valMsgFor"),
+                    content: $(this).text()
+                })
+                .html("<p class='btn btn-info'> ? </p>");
+            }
+             );
+       </script>
+   }
+  <br />
+}
 <table class="table">
     <tr>
         <th>

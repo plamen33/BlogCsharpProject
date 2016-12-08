@@ -16,10 +16,15 @@ namespace BlogJuneMVC.Controllers
 
         // GET: Comments
         [Authorize]
-        public ActionResult Index()
+       public ActionResult Index(string search)
         {
-            var comments = db.Comments.Include(p => p.Author).Include(c => c.Post);
-            return View(comments.ToList());
+            var comments = new List<Comment>();
+            if (search == null || search == String.Empty)
+            { comments = db.Comments.Include(p => p.Author).Include(c => c.Post).ToList(); }
+            else
+            { comments = db.Comments.Include(p => p.Author).Include(c => c.Post).Where(p => p.Text.Contains(search)).ToList(); }
+
+            return View(comments);
         }
 
         // GET: Comments/Details/5
