@@ -101,7 +101,9 @@ namespace BlogJuneMVC.Models
 
     public class ResetPasswordViewModel
     {
-        [Required]
+        public string Id { get; set; }  //custom added for password edit
+
+        //[Required]  - we comment this to change user password EditUserPassword
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

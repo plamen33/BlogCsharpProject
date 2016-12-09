@@ -63,6 +63,7 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-success" })
+			    @Html.ActionLink("Change Password", "EditUserPassword", new { id = item.Id }, new { @class = "btn btn-warning" })
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
 
             </td>

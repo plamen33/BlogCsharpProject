@@ -206,6 +206,42 @@ namespace BlogJuneMVC.Controllers
 
         }
 
+		 // GET: /EditPassword
+        public ActionResult EditUserPassword(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ResetPasswordViewModel model = new ResetPasswordViewModel() { Id = id };
+            return View(model);
+        }
+
+        //
+        // POST: /EditPassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUserPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var removePassword = UserManager.RemovePassword(model.Id);
+            if (removePassword.Succeeded)
+            {
+                //Removed Password Success
+                var AddPassword = UserManager.AddPassword(model.Id, model.Password);
+                if (AddPassword.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+		
         protected override void Dispose(bool disposing)
         {
             if (disposing)
