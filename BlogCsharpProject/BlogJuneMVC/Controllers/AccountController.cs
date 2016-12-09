@@ -174,7 +174,18 @@ namespace BlogJuneMVC.Controllers
 
                     // add user to User Role - User:
                     UserManager.AddToRole(user.Id, "User");
+                    ////// This code does a Logoff Login in order to get the current Role - AddToRole to run correctly//////
+                    var userId = HttpContext.User.Identity.GetUserId();
 
+                    var authenticationManager = HttpContext.GetOwinContext().Authentication;
+
+                    authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
+                    var user1 = UserManager.FindById(userId);
+                    var identity = UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+
+                    authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = false }, identity);
+                    ////////////////  ========================================= //////////////////////////////////
                     this.AddNotification("Successful registration!", NotificationType.SUCCESS);
                     return RedirectToAction("Index", "Home");
                 }
