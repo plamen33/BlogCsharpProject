@@ -175,7 +175,7 @@ namespace BlogJuneMVC.Controllers
         //[Authorize(Roles = "TrustedUser")]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Body,Category,Date,Tags")] Post post, string returnUrl)  // ", string returnUrl" neeeded to return to page number of Index
+        public ActionResult Edit([Bind(Include = "Id,Title,Body,Category,Date,Tags,Count")] Post post, string returnUrl)  // ", string returnUrl" neeeded to return to page number of Index
         {
             if (ModelState.IsValid)
             {
