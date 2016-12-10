@@ -131,21 +131,28 @@ namespace BlogJuneMVC.Controllers
                 {
                     post.Author = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
                     post.Date = DateTime.Now;
-                    db.Posts.Add(post);
-					
-					 post.Count = 0;
-                    /////////////////////////// images upload/////
-                    if (upload != null && upload.ContentLength > 0 )
+					post.Count = 0;
+                    /////////////////////////// images upload ////
+
+                    if (upload != null && (upload.ContentLength > 0 && upload.ContentLength < 33000))
                     {
                         var fileExt = Path.GetExtension(upload.FileName); // put it here not to have issues
-
+                        if (fileExt.ToLower().EndsWith(".png") || fileExt.ToLower().EndsWith(".jpg") || fileExt.ToLower().EndsWith(".gif") || fileExt.ToLower().EndsWith(".jpeg"))// Important for security
+                        {
                             var fileName = Path.GetFileName(upload.FileName);
-                            var path = Path.Combine(Server.MapPath("~/images/posts/" + fileName));
+                            var newFileName = Guid.NewGuid() + fileName;
+                            var path = Path.Combine(Server.MapPath("~/images/posts/" + newFileName));
+                            if (!Directory.Exists(HttpContext.Server.MapPath("~/images/posts/")))
+                            {
+                                Directory.CreateDirectory(HttpContext.Server.MapPath("~/images/posts/"));
+                            }
                             upload.SaveAs(path);
-                            post.Image = fileName;
-                        
+                            post.Image = newFileName;
+                        }
                     }
+
                     /////////////////////////////
+					db.Posts.Add(post);
                     db.SaveChanges();
                     this.AddNotification("Post created!", NotificationType.INFO);
                     if (returnUrl == null || returnUrl == "") { return RedirectToAction("Index"); }
