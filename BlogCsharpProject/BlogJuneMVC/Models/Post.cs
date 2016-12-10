@@ -46,6 +46,6 @@ namespace BlogJuneMVC.Models
 
         public int Count { get; set; }   // hit counter
 
-
+        public string Image { get; set; }
     }
 }

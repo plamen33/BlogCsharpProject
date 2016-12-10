@@ -123,7 +123,7 @@ namespace BlogJuneMVC.Controllers
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "Id,Title,Body,Date")] Post post)
-        public ActionResult Create([Bind(Include = "Id,Title,Body,Category,Tags,Author")] Post post, string returnUrl) // ", string returnUrl" neeeded to return to page number of Index
+        public ActionResult Create([Bind(Include = "Id,Title,Body,Category,Tags,Author,Count,Image")] Post post, HttpPostedFileBase upload, string returnUrl) // ", string returnUrl" neeeded to return to page number of Index
         {
             try
             {
@@ -132,6 +132,20 @@ namespace BlogJuneMVC.Controllers
                     post.Author = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
                     post.Date = DateTime.Now;
                     db.Posts.Add(post);
+					
+					 post.Count = 0;
+                    /////////////////////////// images upload/////
+                    if (upload != null && upload.ContentLength > 0 )
+                    {
+                        var fileExt = Path.GetExtension(upload.FileName); // put it here not to have issues
+
+                            var fileName = Path.GetFileName(upload.FileName);
+                            var path = Path.Combine(Server.MapPath("~/images/posts/" + fileName));
+                            upload.SaveAs(path);
+                            post.Image = fileName;
+                        
+                    }
+                    /////////////////////////////
                     db.SaveChanges();
                     this.AddNotification("Post created!", NotificationType.INFO);
                     if (returnUrl == null || returnUrl == "") { return RedirectToAction("Index"); }
