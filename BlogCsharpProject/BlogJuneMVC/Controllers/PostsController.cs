@@ -197,10 +197,40 @@ namespace BlogJuneMVC.Controllers
         //[Authorize(Roles = "TrustedUser")]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Body,Category,Date,Tags,Count")] Post post, string returnUrl)  // ", string returnUrl" neeeded to return to page number of Index
+        public ActionResult Edit([Bind(Include = "Id,Title,Body,Category,Date,Tags,Image,Count")] Post post, string returnUrl, HttpPostedFileBase upload)  // ", string returnUrl" neeeded to return to page number of Index
         {
             if (ModelState.IsValid)
             {
+                /// edit photo - delete old add new
+                ///////////////////////////
+
+                if (upload != null && (upload.ContentLength > 0 && upload.ContentLength < 33000))
+                {
+                    var fileExt = Path.GetExtension(upload.FileName); // put it here not to have issues
+                    if (fileExt.ToLower().EndsWith(".png") || fileExt.ToLower().EndsWith(".jpg") || fileExt.ToLower().EndsWith(".gif") || fileExt.ToLower().EndsWith(".jpeg"))// Important for security
+                    {
+                        // delete old photo from System
+                        string oldFileName = post.Image;
+                        string deletePath = Request.MapPath("~/images/posts/" + oldFileName);
+                        if (System.IO.File.Exists(deletePath))
+                        {
+                            System.IO.File.Delete(deletePath);
+                        }
+
+                        var fileName = Path.GetFileName(upload.FileName);
+                        var newFileName = Guid.NewGuid() + fileName;
+                        var path = Path.Combine(Server.MapPath("~/images/posts/" + newFileName));
+                        if (!Directory.Exists(HttpContext.Server.MapPath("~/images/posts/")))
+                        {
+                            Directory.CreateDirectory(HttpContext.Server.MapPath("~/images/posts/"));
+                        }
+                        upload.SaveAs(path);
+
+                        post.Image = newFileName;
+                    }
+                }
+                /////////////////////////////
+
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
                 this.AddNotification("Post edited!", NotificationType.INFO);
