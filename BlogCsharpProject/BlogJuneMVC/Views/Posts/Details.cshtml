@@ -1,4 +1,5 @@
 ﻿@model BlogJuneMVC.Models.Post
+@using BlogJuneMVC.Extensions;
 
 @{
     ViewBag.Title = "Details";
@@ -58,8 +59,8 @@
             Image
         </dt>
         <dd>
-            <img src="@Url.Content("/images/posts/" + Model.Image)" alt="[No Photo is Available for this post]" height="300" />
-
+            @Html.Image("/images/posts/" + Model.Image)
+            @*<img src="@Url.Content("/images/posts/" + Model.Image)" alt="[No Photo is Available for this post]" height="300" />*@
             @*@Html.DisplayFor(model => model.Image)*@
         </dd>
     </dl>

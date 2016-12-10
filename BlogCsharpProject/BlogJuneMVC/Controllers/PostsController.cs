@@ -153,8 +153,10 @@ namespace BlogJuneMVC.Controllers
                     }
 
                     /////////////////////////////
-					db.Posts.Add(post);
+                  
+                    db.Posts.Add(post);                   
                     db.SaveChanges();
+
                     this.AddNotification("Post created!", NotificationType.INFO);
                     if (returnUrl == null || returnUrl == "") { return RedirectToAction("Index"); }
                     return Redirect(returnUrl); // neeeded to return to page number of Index 
@@ -269,6 +271,13 @@ namespace BlogJuneMVC.Controllers
         public ActionResult DeleteConfirmed(int id, string returnUrl) // ", string returnUrl" neeeded to return to page number of Index
         {
             Post post = db.Posts.Find(id);
+            // delete old photo from System
+            string oldFileName = post.Image;
+            string deletePath = Request.MapPath("~/images/posts/" + oldFileName);
+            if (System.IO.File.Exists(deletePath))
+            {
+                System.IO.File.Delete(deletePath);
+            }
             db.Posts.Remove(post);
             db.SaveChanges();
             this.AddNotification("Post deleted!", NotificationType.SUCCESS);

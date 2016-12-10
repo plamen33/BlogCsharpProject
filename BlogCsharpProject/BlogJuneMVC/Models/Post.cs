@@ -36,7 +36,9 @@ namespace BlogJuneMVC.Models
 
         [Required]
         public string Category { get; set; }
+
         [Required]
+        [StringLength(100)]
         public string Tags { get; set; }
 
         //public string Author_Id { get; set; }

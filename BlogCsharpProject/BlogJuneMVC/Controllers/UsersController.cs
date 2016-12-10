@@ -175,7 +175,7 @@ namespace BlogJuneMVC.Controllers
             //// if the Admin User delete himself
             if (id == User.Identity.GetUserId())
             {
-                this.AddNotification("You cannot delete yourself - Code Forbidden! Mace Windu.", NotificationType.ERROR);
+                this.AddNotification("You cannot delete yourself - Code Forbidden!", NotificationType.ERROR);
                 this.AddNotification("You want to break my code - NOT THIS TIME !", NotificationType.WARNING);
                 return RedirectToAction("Index");
             }
@@ -187,7 +187,17 @@ namespace BlogJuneMVC.Controllers
                 foreach (var item in db.Posts)
                 {
                     if (item.Author == user)
-                    { db.Posts.Remove(item); }
+                    {
+                        // delete photo before deleting the user /////////////
+                        string oldFileName = item.Image;
+                        string deletePath = Request.MapPath("~/images/posts/" + oldFileName);
+                        if (System.IO.File.Exists(deletePath))
+                        {
+                            System.IO.File.Delete(deletePath);
+                        }
+                        /////////////
+                        db.Posts.Remove(item);
+                    }
                 }
                 // remove comments by the user:
                 foreach (var item in db.Comments)
@@ -195,7 +205,6 @@ namespace BlogJuneMVC.Controllers
                     if (item.Author == user)
                     { db.Comments.Remove(item); }
                 }
-
 
                 // now remove the user himself
                 db.Users.Remove(user);
