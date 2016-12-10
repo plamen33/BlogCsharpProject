@@ -153,7 +153,11 @@ namespace BlogJuneMVC.Controllers
                     }
 
                     /////////////////////////////
-                  
+                    // // Tag hack fix: ///
+                    string tag = post.Tags;
+                    List<string> taglist2 = tag.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
+                    post.Tags = string.Join(" ", taglist2).ToLower();
+                    /// tag hack fix ////
                     db.Posts.Add(post);                   
                     db.SaveChanges();
 
