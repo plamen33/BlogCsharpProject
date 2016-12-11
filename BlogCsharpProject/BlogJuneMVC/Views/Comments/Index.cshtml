@@ -45,7 +45,8 @@
         </th>
        
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.ActionLink("Date", "Index", new { sortBy = ViewBag.SortDateParameter })
+            @*@Html.DisplayNameFor(model => model.Date)*@
         </th>
         <th>Actions</th>
         <th>Author</th>

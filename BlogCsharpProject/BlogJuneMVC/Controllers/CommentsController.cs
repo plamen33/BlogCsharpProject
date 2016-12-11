@@ -16,13 +16,23 @@ namespace BlogJuneMVC.Controllers
 
         // GET: Comments
         [Authorize]
-       public ActionResult Index(string search)
+       public ActionResult Index(string search, string sortBy)
         {
-            var comments = new List<Comment>();
+            ViewBag.SortDateParameter = string.IsNullOrEmpty(sortBy) ? "Date asc" : "";
+
+            var comments = new List<Comment>().AsQueryable();
             if (search == null || search == String.Empty)
-            { comments = db.Comments.Include(p => p.Author).Include(c => c.Post).ToList(); }
+            { comments = db.Comments.Include(p => p.Author).Include(c => c.Post); }
             else
-            { comments = db.Comments.Include(p => p.Author).Include(c => c.Post).Where(p => p.Text.Contains(search)).ToList(); }
+            { comments = db.Comments.Include(p => p.Author).Include(c => c.Post).Where(p => p.Text.Contains(search)); }
+
+            switch (sortBy)
+            {
+                case "Date asc": comments = comments.OrderBy(x => x.Date); break;
+                default:
+                    comments = comments.OrderByDescending(x => x.Date); break;
+
+            }
 
             return View(comments);
         }
