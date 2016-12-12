@@ -1,12 +1,11 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-        <div class="jumbotron">
-         <p class="text-left"><img src="/images/logo.png" height="70" width="212" align="left"/><img src="/images/blog.png" height="70" width="212" align="left" /></p>
-           <h3>&nbsp&nbsp&nbsp</h3>
-             @*<h2>&nbsp&nbsp&nbsp Blog Project</h2>*@
-         </div>
-
+<div class="jumbotron">
+    <p class="text-left"><img src="/images/logo.png" height="75" width="210" align="left" /><img src="/images/blog3.png" height="100" width="177" align="left" /></p>
+    <h2>&nbsp&nbsp&nbsp</h2>
+    @*<h2>&nbsp&nbsp&nbsp Blog Project</h2>*@
+</div>
 
 @model List<BlogJuneMVC.Models.Post>
 <section class="row">
@@ -14,7 +13,7 @@
     {
         <article class="post col-md-4">
             <h2><a href="/Posts/Details/@post.Id">@BlogJuneMVC.Classes.Utils.CutText(post.Title, 20)</a></h2>
-            <div>
+            <div class="alert alert-default">
                 Posted on <i>@post.Date</i>
                 @if (post.Author != null)
                 {
@@ -23,9 +22,12 @@
             </div>
 
             <p class="alert alert-info">
-            @BlogJuneMVC.Classes.Utils.CutText(post.Body, 200)
+                @BlogJuneMVC.Classes.Utils.CutText(post.Body, 200)
             </p>
+
         </article>
+
+
     }
 </section>
 

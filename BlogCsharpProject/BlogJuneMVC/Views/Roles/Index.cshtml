@@ -5,16 +5,36 @@
 
 <h2>Roles Listing </h2>
 
-@Html.ActionLink("Create New Role", "Create") 
+@Html.ActionLink("Create New Role", "Create", null, new { @class = "btn btn-default" })
 <hr />
-<div>
-    @foreach (var role in Model)
-    {
-        <p>
-            <strong>@role.Name        </strong>
-            <br />
-            @Html.ActionLink("Edit Role", "Edit", new { roleName = @role.Name }) |
-            <span onclick="return confirm('Are you sure you want to delete this Role?')"><a href="/Roles/Delete?RoleName=@role.Name" class="delLink" style="color:red;">Delete Role</a></span> 
-        </p>
-    }
+<div class="container">
+    <div class="well">
+        <div class="row">
+            <table class="table table-striped table-hover col-sm-12">
+                <thead>
+                    <tr>
+                        <th>Role Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var role in Model)
+                    {
+                        <tr>
+                            <td> <text style="color:seagreen;">@role.Name</text></td>
+                            <td>
+                                <strong>
+                                    @Html.ActionLink("Edit Role", "Edit", new { roleName = @role.Name }) &nbsp;&nbsp;
+                                    <span onclick="return confirm('Are you sure you want to delete this Role?')"><a href="/Roles/Delete?RoleName=@role.Name" class="delLink" style="color:red;">Delete Role</a></span>
+                                </strong>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

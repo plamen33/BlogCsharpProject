@@ -5,21 +5,32 @@
 
 <h2>Edit Role</h2>
 
-@Html.ActionLink("List Roles", "Index") | @Html.ActionLink("Manage User Role", "ManageUserRoles")
+@Html.ActionLink("List Roles", "Index", null, new { @class = "btn btn-default" })
 <hr />
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-    @Html.HiddenFor(model => model.Id)
-    <div>
-        Role name
+<div class="container">
+    <div class="well">
+        @using (Html.BeginForm("Edit", "Roles", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, "Role Name", new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <input type="submit" value="Edit" class="btn btn-warning" />
+                    @Html.ActionLink("Cancel", "Index", "Roles", new { @class = "btn btn-default" })
+                </div>
+            </div>
+        }
     </div>
-    <p>
-        @Html.TextBoxFor(model => model.Name)
-    </p>
-    <input type="submit" value="Save" />
-}
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
@@ -27,5 +38,5 @@
 
 
 @*<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>*@
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@

@@ -33,16 +33,17 @@ namespace BlogJuneMVC.Controllers
         //
         // POST: /Roles/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Microsoft.AspNet.Identity.EntityFramework.IdentityRole role)
         {
             try
             {
-                db.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole()
+                if (ModelState.IsValid)
                 {
-                    Name = collection["RoleName"]
-                });
-                db.SaveChanges();
-                ViewBag.ResultMessage = "Role created successfully !";
+                    db.Roles.Add(role);
+                    db.SaveChanges();
+                    ViewBag.ResultMessage = "Role created successfully !";
+
+                }
                 return RedirectToAction("Index");
             }
             catch
