@@ -17,6 +17,12 @@
             </li>
         }
         <li>
+            @{
+                var imgUrl = Url.Content("~/images/users/" + User.Identity.GetUserName() + ".png") + "?time=" + DateTime.Now.ToString();
+            }
+            <img src="@imgUrl" alt="" class="img-circle" height="49" width="49" />
+        </li>
+        <li>
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>

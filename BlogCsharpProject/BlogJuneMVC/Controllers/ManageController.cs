@@ -7,6 +7,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BlogJuneMVC.Models;
+using System.IO;
+using System.Web.Hosting;
 
 namespace BlogJuneMVC.Controllers
 {
@@ -61,6 +63,8 @@ namespace BlogJuneMVC.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.PhotoUploadSuccess ? "Your photo has been uploaded."   // customized
+                : message == ManageMessageId.FileExtensionError ? "Only jpg, png and gif file formats are allowed."  // customized
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -299,6 +303,42 @@ namespace BlogJuneMVC.Controllers
             });
         }
 
+        // custom created by me for User picture
+        [HttpPost]
+        public async Task<ActionResult> UploadPhoto(HttpPostedFileBase file)
+        {
+            if (file != null && (file.ContentLength > 0 && file.ContentLength < 33000))
+            {
+                var user = await GetCurrentUserAsync();
+                var username = user.UserName;
+                var fileExt = Path.GetExtension(file.FileName);
+
+                if (fileExt.ToLower().EndsWith(".png") || fileExt.ToLower().EndsWith(".jpg") || fileExt.ToLower().EndsWith(".gif"))// Important for security if saving in webroot
+                {
+                    var filename = username + ".png";
+                    var filePath = HostingEnvironment.MapPath("~/images/users/") + filename;
+                    var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/images/users/"));
+                    if (directory.Exists == false)
+                    {
+                        directory.Create();
+                    }
+                    /// ViewBag.FilePath = filePath.ToString(); // this is not needed
+                    file.SaveAs(filePath);
+                    return RedirectToAction("Index", new { Message = ManageMessageId.PhotoUploadSuccess });
+                }
+                else
+                {
+                    return RedirectToAction("Index", new { Message = ManageMessageId.FileExtensionError });
+                }
+            }
+            return RedirectToAction("Index", new { Message = ManageMessageId.Error });// PRG
+        }
+
+        private async Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            return await UserManager.FindByIdAsync(User.Identity.GetUserId());
+        }
+
         //
         // POST: /Manage/LinkLogin
         [HttpPost]
@@ -381,7 +421,9 @@ namespace BlogJuneMVC.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
-            Error
+            Error,
+            PhotoUploadSuccess,
+            FileExtensionError
         }
 
         #endregion
