@@ -7,11 +7,11 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm("Create", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" })) // without "Create", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }) Images won't load
+@using (Html.BeginForm("Create", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))  // without "Create", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }) Images won't load
 {
     <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" /> @*needed to return to page of Index*@
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>New Post Creation</h4>
         <hr />
@@ -34,15 +34,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Category", new List<SelectListItem>
-                {
-                new SelectListItem { Text = "Programming", Value="Programming"},
-                new SelectListItem { Text = "Science", Value="Science"},
-                new SelectListItem { Text = "Space", Value="Space"},
-                new SelectListItem { Text = "News", Value="News"},
-                new SelectListItem { Text = "Other", Value="Other"}
-                }, new { @class = "form-control" }
-                )
+                @Html.DropDownList("Category", new SelectList(Model.Categories, "Name", "Name"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -53,6 +45,7 @@
                 @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <text class="text-muted"> Separate tags using space, as separator. For complex tags use underscore. Example: text news data solar_system </text>
@@ -68,16 +61,28 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
+
             </div>
         </div>
     </div>
 }
 
 <div>
-    <a class="text" href="@ViewBag.returnUrl">Back</a> 
-     @*@Html.ActionLink("Back to Posts", "Index")*@
+    <a class="text" href="@ViewBag.returnUrl">Back</a>
+    @*@Html.ActionLink("Back to Posts", "Index")*@
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+
+@*@Html.DropDownList("Category", new List<SelectListItem>
+                {
+                new SelectListItem { Text = "Programming", Value="Programming"},
+                new SelectListItem { Text = "Science", Value="Science"},
+                new SelectListItem { Text = "Space", Value="Space"},
+                new SelectListItem { Text = "News", Value="News"},
+                new SelectListItem { Text = "Other", Value="Other"}
+                }, new { @class = "form-control" }
+                )*@

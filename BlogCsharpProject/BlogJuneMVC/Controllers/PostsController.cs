@@ -89,31 +89,32 @@ namespace BlogJuneMVC.Controllers
 
             }
         }
-		  // GET: CategorySearch
-        public ActionResult CategorySearch(string Category, string search)
+        // GET: CategorySearch
+        public ActionResult CategorySearch(string Category, string search, CatSearchPostViewModel model)
         {
-            var posts = new List<Post>();
+            model.Categories = db.Categories.OrderBy(c => c.Id).ToList();
+
             if (search == null || search == String.Empty)
 
-            { posts = db.Posts.Include(p => p.Author).Where(p => p.Category == Category).ToList(); }
+            { model.posts = db.Posts.Include(p => p.Author).Where(p => p.Category == Category).ToList(); }
             else
             {
                 var postsBody = db.Posts.Include(p => p.Author).Where(p => p.Category == Category).Where(p => p.Body.Contains(search)).ToList();
                 var postsTitle = db.Posts.Include(p => p.Author).Where(p => p.Category == Category).Where(p => p.Title.Contains(search)).ToList();
-                posts = postsBody.Concat(postsTitle).Distinct().ToList();  // without distinct 2 equal post could appear
+                model.posts = postsBody.Concat(postsTitle).Distinct().ToList();  // without distinct 2 equal post could appear
             }
-
-
-            return View(posts);
+            return View(model);
         }
-		
-		
-       // GET: Posts/Create
+
+
+        // GET: Posts/Create
         [Authorize]
         public ActionResult Create()
         {
             ViewBag.returnUrl = Request.UrlReferrer; // to return to page of Index
-            return View();
+            var post = new Post();
+            post.Categories = db.Categories.OrderBy(c => c.Id).ToList();
+            return View(post);
         }
 
         // POST: Posts/Create
@@ -124,7 +125,7 @@ namespace BlogJuneMVC.Controllers
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "Id,Title,Body,Date")] Post post)
-        public ActionResult Create([Bind(Include = "Id,Title,Body,Category,Tags,Author,Count,Image")] Post post, HttpPostedFileBase upload, string returnUrl) // ", string returnUrl" neeeded to return to page number of Index
+        public ActionResult Create([Bind(Include = "Id,Title,Body,Category,Tags,Author,Count,Image,Categories")] Post post, HttpPostedFileBase upload, string returnUrl) // ", string returnUrl" neeeded to return to page number of Index
         {
             try
             {
@@ -161,7 +162,7 @@ namespace BlogJuneMVC.Controllers
                     db.Posts.Add(post);                   
                     db.SaveChanges();
 
-                    this.AddNotification("Post created!", NotificationType.INFO);
+                    this.AddNotification("New post created!", NotificationType.INFO);
                     if (returnUrl == null || returnUrl == "") { return RedirectToAction("Index"); }
                     return Redirect(returnUrl); // neeeded to return to page number of Index 
                     //return RedirectToAction("Index");
@@ -185,6 +186,7 @@ namespace BlogJuneMVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Post post = db.Posts.Find(id);
+            post.Categories = db.Categories.OrderBy(c => c.Id).ToList();
             if (post == null)
             {
                 return HttpNotFound();
@@ -203,7 +205,7 @@ namespace BlogJuneMVC.Controllers
         //[Authorize(Roles = "TrustedUser")]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Body,Category,Date,Tags,Image,Count")] Post post, string returnUrl, HttpPostedFileBase upload)  // ", string returnUrl" neeeded to return to page number of Index
+        public ActionResult Edit([Bind(Include = "Id,Title,Body,Category,Date,Tags,Image,Count,Categories")] Post post, string returnUrl, HttpPostedFileBase upload)  // ", string returnUrl" neeeded to return to page number of Index
         {
             if (ModelState.IsValid)
             {

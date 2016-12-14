@@ -38,15 +38,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Category", new List<SelectListItem>
-                {
-                new SelectListItem { Text = "Programming", Value="Programming"},
-                new SelectListItem { Text = "Science", Value="Science"},
-                new SelectListItem { Text = "Space", Value="Space"},
-                new SelectListItem { Text = "News", Value="News"},
-                new SelectListItem { Text = "Other", Value="Other"}
-                }, new { @class = "form-control" }
-                )
+                @Html.DropDownList("Category", new SelectList(Model.Categories, "Name", "Name"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -90,3 +82,19 @@
 @*<div>
     @Html.ActionLink("Back to List", "Index")
 </div>*@
+
+@*<div class="form-group">
+        @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("Category", new List<SelectListItem>
+            {
+            new SelectListItem { Text = "Programming", Value="Programming"},
+            new SelectListItem { Text = "Science", Value="Science"},
+            new SelectListItem { Text = "Space", Value="Space"},
+            new SelectListItem { Text = "News", Value="News"},
+            new SelectListItem { Text = "Other", Value="Other"}
+            }, new { @class = "form-control" }
+            )
+            @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
