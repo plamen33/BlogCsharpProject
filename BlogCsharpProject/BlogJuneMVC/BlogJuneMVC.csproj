@@ -360,6 +360,7 @@
     <Content Include="Views\Users\delete.cshtml" />
     <Content Include="Views\Users\edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Roles\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\posts\" />

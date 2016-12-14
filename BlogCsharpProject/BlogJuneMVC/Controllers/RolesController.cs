@@ -39,9 +39,16 @@ namespace BlogJuneMVC.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    string roleName = role.Name;
+                    if (roleName.Length > 33)
+                    {
+                        string roleLimited = role.Name.Substring(0, 33);
+                        role.Name = roleLimited;
+                    }
                     db.Roles.Add(role);
                     db.SaveChanges();
                     ViewBag.ResultMessage = "Role created successfully !";
+                    this.AddNotification("New Role created !", NotificationType.SUCCESS);
 
                 }
                 return RedirectToAction("Index");
@@ -50,14 +57,6 @@ namespace BlogJuneMVC.Controllers
             {
                 return View();
             }
-        }
-
-        public ActionResult Delete(string RoleName)
-        {
-            var thisRole = db.Roles.Where(r => r.Name.Equals(RoleName, System.StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-            db.Roles.Remove(thisRole);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         //
@@ -77,15 +76,46 @@ namespace BlogJuneMVC.Controllers
         {
             try
             {
-                db.Entry(role).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    string roleName = role.Name;
+                    if (roleName.Length > 33)
+                    {
+                        string roleLimited = role.Name.Substring(0, 33);
+                        role.Name = roleLimited;
+                    }
 
+                    db.Entry(role).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
             catch
             {
                 return View();
             }
+        }
+
+        // // Get Delete
+        public ActionResult Delete(string roleName)
+        {
+            var thisRole = db.Roles.Where(r => r.Name.Equals(roleName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+
+            return View(thisRole);
+        }
+        // // Post Delete
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(Microsoft.AspNet.Identity.EntityFramework.IdentityRole role)
+        {
+
+            db.Entry(role).State = System.Data.Entity.EntityState.Deleted;
+            //db.Roles.Remove(role);
+            db.SaveChanges();
+
+            this.AddNotification("User Role deleted !", NotificationType.WARNING);
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
@@ -101,6 +131,16 @@ namespace BlogJuneMVC.Controllers
     }
 }
 
+
+//Old functionality:
+//    public ActionResult Delete(string RoleName)
+//{
+//    var thisRole = db.Roles.Where(r => r.Name.Equals(RoleName, System.StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+//    db.Roles.Remove(thisRole);
+//    db.SaveChanges();
+//    this.AddNotification("User Role deleted !", NotificationType.WARNING);
+//    return RedirectToAction("Index");
+//}
 
 //using BlogJuneMVC.Models;
 //using MVCBlog.Models;

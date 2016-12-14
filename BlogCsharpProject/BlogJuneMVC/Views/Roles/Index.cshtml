@@ -17,7 +17,7 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-
+                
                 <tbody>
 
                     @foreach (var role in Model)
@@ -25,12 +25,12 @@
                         <tr>
                             <td> <text style="color:seagreen;">@role.Name</text></td>
                             <td>
-                                <strong>
-                                    @Html.ActionLink("Edit Role", "Edit", new { roleName = @role.Name }) &nbsp;&nbsp;
-                                    <span onclick="return confirm('Are you sure you want to delete this Role?')"><a href="/Roles/Delete?RoleName=@role.Name" class="delLink" style="color:red;">Delete Role</a></span>
-                                </strong>
-                            </td>
-                        </tr>
+                            <strong style="color:red;">
+                            @Html.ActionLink("Edit Role", "Edit", new { roleName = @role.Name }) &nbsp;&nbsp;
+                            @Html.ActionLink("Delete Role", "Delete", new { roleName = @role.Name }, new { @style = "color:red;" })                              
+                            </strong>
+                             </td>
+                       </tr>
                     }
 
                 </tbody>
@@ -38,3 +38,5 @@
         </div>
     </div>
 </div>
+
+@*<span onclick="return confirm('Are you sure you want to delete this Role?')"><a href="/Roles/Delete?RoleName=@role.Name" class="delLink" style="color:red;">Delete Role</a></span>*@
