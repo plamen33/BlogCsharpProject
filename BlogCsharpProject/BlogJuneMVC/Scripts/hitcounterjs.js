@@ -32,10 +32,10 @@ function setCookie(visits) {
     expireDate.setDate(365 + expireDate.getDate());
     // Saving the number of visits
     document.cookie = "visits=" + visits + 
-                      "; expires=" + expireDate.toGMTString() + ";"; 
+                      "; expires=" + expireDate.toUTCString() + ";";
     // Saving the current date, as time of last visit
-    document.cookie = "LastVisit=" + escape(today.toGMTString()) + 
-                       "; expires=" + expireDate.toGMTString() + ";";
+    document.cookie = "LastVisit=" + escape(today.toUTCString()) +
+                       "; expires=" + expireDate.toUTCString() + ";";
 }
 
 if ("" == document.cookie)

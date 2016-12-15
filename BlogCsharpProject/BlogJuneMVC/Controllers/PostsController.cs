@@ -159,7 +159,7 @@ namespace BlogJuneMVC.Controllers
                     /////////////////////////////
                     // // Tag hack fix: ///
                     string tag = post.Tags;
-                    List<string> taglist2 = tag.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
+                    List<string> taglist2 = tag.Split(new char[] { ' ', '\r', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
                     post.Tags = string.Join(" ", taglist2).ToLower();
                     /// tag hack fix ////
 
@@ -265,6 +265,11 @@ namespace BlogJuneMVC.Controllers
                     }
                 }
                 /////////////////////////////
+                // // Tag hack fix:
+                string tag = post.Tags;
+                List<string> taglist2 = tag.Split(new char[] { ' ', '\r', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
+                post.Tags = string.Join(" ", taglist2).ToLower();
+                /// /// tag hack fix end
                 /// /// // Video from youtube feature
                 string videoLink = post.VideoLink;
                 string patternYouTube = @"^(?:https?\:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v\=))([\w-]{10,12})(?:[\&\?\#].*?)*?(?:[\&\?\#]t=([\d]+))?$";

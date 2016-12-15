@@ -37,11 +37,11 @@ namespace BlogJuneMVC.Controllers
         {
             if (ModelState.IsValid)
             {   
-                    //Save category in DB
-                    db.Categories.Add(category);
-                    db.SaveChanges();
-
-                    return RedirectToAction("Index");
+                //Save category in DB
+                db.Categories.Add(category);
+                db.SaveChanges();
+                this.AddNotification("New post category created !", NotificationType.SUCCESS);
+                return RedirectToAction("Index");
                 
             }
             // If we got this far, something failed, redisplay form
@@ -125,8 +125,9 @@ namespace BlogJuneMVC.Controllers
 
                 db.Categories.Remove(category);
                 db.SaveChanges();
-                // redirect to index page
-                return RedirectToAction("Index");
+                this.AddNotification("Category was deleted !", NotificationType.WARNING);
+            // redirect to index page
+            return RedirectToAction("Index");
             
         }
         protected override void Dispose(bool disposing)

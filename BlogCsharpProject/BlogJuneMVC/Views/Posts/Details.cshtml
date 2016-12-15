@@ -1,4 +1,5 @@
 ﻿@using BlogJuneMVC.Extensions;
+@using Microsoft.AspNet.Identity
 @model BlogJuneMVC.Models.Post
 
 @{
@@ -111,7 +112,7 @@
     }
 </div>
 <p>
-    @if (User.IsInRole("Administrators"))
+    @if (User.IsInRole("Administrators") || User.IsInRole("TrustedUser") && Model.Author.UserName == User.Identity.GetUserName())
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) @:|
 }

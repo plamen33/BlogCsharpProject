@@ -73,13 +73,21 @@
            
         </td> 
 
-        @if (User.IsInRole("Administrators"))
-        {
-            <td>
-                @Html.ActionLink("Edit ", "Edit", new { id = item.Id })
-                @Html.ActionLink(" Delete", "Delete", new { id = item.Id })
-            </td>
-        }
+         @if (User.IsInRole("TrustedUser") && item.Author.UserName == User.Identity.GetUserName())
+         {
+           <td>
+               @Html.ActionLink("Edit ", "Edit", new { id = item.Id })
+               @Html.ActionLink(" Delete", "Delete", new { id = item.Id }, new { @style = "color:red;" })
+           </td>
+         }
+       @if (User.IsInRole("Administrators"))
+       {
+           <td>
+               @Html.ActionLink("Edit ", "Edit", new { id = item.Id }, new { @style = "color:brown;" })
+               @Html.ActionLink(" Delete", "Delete", new { id = item.Id }, new { @style = "color:coral;" })
+               @*<span onclick="return confirm('Are you sure you want to delete this Role?')"><a href="/Roles/Delete?RoleName=@role.Name" class="delLink" style="color:burlywood;">Delete Role</a></span>*@
+           </td>
+       }
     </tr>
 }
 

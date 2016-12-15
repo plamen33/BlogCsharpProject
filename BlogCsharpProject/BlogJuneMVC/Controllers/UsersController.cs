@@ -183,6 +183,15 @@ namespace BlogJuneMVC.Controllers
             {
                 ApplicationUser user = db.Users.Find(id);
 
+                // // delete User image if exists
+                var username = user.UserName;
+                var filenameUser = username + ".png";
+                string deleteUserPath = Request.MapPath("~/images/users/" + filenameUser);
+                if (System.IO.File.Exists(deleteUserPath))
+                {
+                    System.IO.File.Delete(deleteUserPath);
+                }
+
                 // remove posts from users
                 foreach (var item in db.Posts)
                 {
@@ -244,6 +253,7 @@ namespace BlogJuneMVC.Controllers
                 var AddPassword = UserManager.AddPassword(model.Id, model.Password);
                 if (AddPassword.Succeeded)
                 {
+                    this.AddNotification("User password was successfully changed !", NotificationType.SUCCESS);
                     return RedirectToAction("Index");
                 }
             }
