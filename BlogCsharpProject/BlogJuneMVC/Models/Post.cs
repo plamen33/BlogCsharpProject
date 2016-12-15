@@ -49,6 +49,9 @@ namespace BlogJuneMVC.Models
         public int Count { get; set; }   // hit counter
 
         public string Image { get; set; }
+        public string Video { get; set; }
+
+        public string VideoLink { get; set; }
 
         public virtual List<Category> Categories { get; set; }   // needed for categories 
     }

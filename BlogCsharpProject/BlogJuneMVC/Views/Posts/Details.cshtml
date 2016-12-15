@@ -1,11 +1,15 @@
-﻿@model BlogJuneMVC.Models.Post
-@using BlogJuneMVC.Extensions;
+﻿@using BlogJuneMVC.Extensions;
+@model BlogJuneMVC.Models.Post
 
 @{
     ViewBag.Title = "Details";
 }
 
 <h2>Details</h2>
+
+@{
+    string a = @Model.Image;
+}
 
 <div>
     <h4>Post</h4>
@@ -42,6 +46,7 @@
         <dt>
             <strong>Author</strong>
         </dt>
+
         <dd>
             @Html.DisplayFor(model => model.Author.UserName)
         </dd>
@@ -60,9 +65,22 @@
         </dt>
         <dd>
             @Html.Image("/images/posts/" + Model.Image)
-            @*<img src="@Url.Content("/images/posts/" + Model.Image)" alt="[No Photo is Available for this post]" height="300" />*@
+
+            @*<img src="@Url.Content("/images/posts/" + Model.Image)" alt="[No Photo is Available for this post]" height="300"/>*@
             @*@Html.DisplayFor(model => model.Image)*@
         </dd>
+        @if (ViewBag.Player != null)
+        {
+            <dt> &nbsp; </dt>
+            <dd> &nbsp; </dd>
+            <dt>
+                YouTube video :
+            </dt>
+            <dd>
+                <iframe width="560" height="315" src="@Url.Content("https://www.youtube.com/embed/" + Model.Video)" frameborder="0" allowfullscreen alt="no video attached"></iframe>
+            </dd>
+        }
+
     </dl>
 </div>
 
@@ -92,14 +110,14 @@
         </div>
     }
 </div>
-
-<p>@if (User.IsInRole("Administrators"))
-{
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) @:|
+<p>
+    @if (User.IsInRole("Administrators"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) @:|
 }
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Posts", "Index")
 </p>
-<br />
+
 @*added for comments:  *@
 <p>
     <a href="../../Comments/Create/@Model.Id">Add new comment</a> |
@@ -107,4 +125,7 @@
 </p>
 @*@Html.ActionLink("Back to Posts", "Index")*@
 
+<br />
 <h4 align="center">This post was viewed <span class="label label-default">@Model.Count</span> times.</h4>
+
+

@@ -60,6 +60,7 @@ namespace BlogJuneMVC.Controllers
                 return HttpNotFound();
             }
 			post.Count = post.Count + 1;
+            ViewBag.Player = post.Video;  // this option is needed to show and hide videos if null is in the video string
             db.SaveChanges();
             return View(post);
         }
@@ -125,7 +126,7 @@ namespace BlogJuneMVC.Controllers
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "Id,Title,Body,Date")] Post post)
-        public ActionResult Create([Bind(Include = "Id,Title,Body,Category,Tags,Author,Count,Image,Categories")] Post post, HttpPostedFileBase upload, string returnUrl) // ", string returnUrl" neeeded to return to page number of Index
+        public ActionResult Create([Bind(Include = "Id,Title,Body,Category,Tags,Author,Count,Image,Categories,VideoLink")] Post post, HttpPostedFileBase upload, string returnUrl) // ", string returnUrl" neeeded to return to page number of Index
         {
             try
             {
@@ -159,6 +160,21 @@ namespace BlogJuneMVC.Controllers
                     List<string> taglist2 = tag.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
                     post.Tags = string.Join(" ", taglist2).ToLower();
                     /// tag hack fix ////
+
+                    /// /// // Video from youtube feature
+                    string videoLink = post.VideoLink;
+                    if (videoLink != null && videoLink.Contains("https://www.youtube.com/watch?v="))
+                    { string video = videoLink.Substring(32); post.Video = video; }
+                    else if (videoLink != null && videoLink.Contains("https://youtu.be/"))
+                    { string video = videoLink.Substring(17); post.Video = video; }
+                    else if (videoLink != null && videoLink.Contains("https://www.youtube.com/embed/"))
+                    { string video = videoLink.Substring(30); post.Video = video; }
+                    else { post.VideoLink = null; }
+                    if (post.Video == "") { post.Video = null; }
+                    /////////////  video youtube feature end///////////
+
+
+
                     db.Posts.Add(post);                   
                     db.SaveChanges();
 
@@ -205,7 +221,7 @@ namespace BlogJuneMVC.Controllers
         //[Authorize(Roles = "TrustedUser")]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Body,Category,Date,Tags,Image,Count,Categories")] Post post, string returnUrl, HttpPostedFileBase upload)  // ", string returnUrl" neeeded to return to page number of Index
+        public ActionResult Edit([Bind(Include = "Id,Title,Body,Category,Date,Tags,Image,Count,Categories,Video,VideoLink")] Post post, string returnUrl, HttpPostedFileBase upload)  // ", string returnUrl" neeeded to return to page number of Index
         {
             if (ModelState.IsValid)
             {
@@ -238,6 +254,22 @@ namespace BlogJuneMVC.Controllers
                     }
                 }
                 /////////////////////////////
+                /// /// // Video from youtube feature
+                string videoLink = post.VideoLink;
+                if (videoLink != null && videoLink.Contains("https://www.youtube.com/watch?v="))
+                { string video = videoLink.Substring(32); post.Video = video; }
+                else if (videoLink != null && videoLink.Contains("https://youtu.be/"))
+                { string video = videoLink.Substring(17); post.Video = video; }
+                else if (videoLink != null && videoLink.Contains("https://www.youtube.com/embed/"))
+                { string video = videoLink.Substring(30); post.Video = video; }
+                else
+                {
+                    if (post.Video == null) { post.VideoLink = null; }
+                    else { post.VideoLink = "https://www.youtube.com/watch?v=" + post.Video; }
+                }
+
+                if (post.Video == "") { post.Video = null; post.VideoLink = null; }
+                /////////////  video youtube feature end///////////
 
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
