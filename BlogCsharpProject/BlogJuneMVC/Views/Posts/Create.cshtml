@@ -63,6 +63,7 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.VideoLink, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.VideoLink, "", new { @class = "text-danger" })
+                <text class="text-muted">To embed video with start time use seconds for start. Example: https://youtu.be/lisiwUZJXqQ?t=2000 </text>
             </div>
         </div>
 

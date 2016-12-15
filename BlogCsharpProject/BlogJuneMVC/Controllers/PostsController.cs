@@ -6,10 +6,12 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
+using System.Web.Helpers;
 using BlogJuneMVC.Models;
 using BlogJuneMVC.Extensions;
 using PagedList;
-using System.IO;
+using System.Text.RegularExpressions;
 
 namespace BlogJuneMVC.Controllers
 {
@@ -163,18 +165,27 @@ namespace BlogJuneMVC.Controllers
 
                     /// /// // Video from youtube feature
                     string videoLink = post.VideoLink;
-                    if (videoLink != null && videoLink.Contains("https://www.youtube.com/watch?v="))
-                    { string video = videoLink.Substring(32); post.Video = video; }
-                    else if (videoLink != null && videoLink.Contains("https://youtu.be/"))
-                    { string video = videoLink.Substring(17); post.Video = video; }
-                    else if (videoLink != null && videoLink.Contains("https://www.youtube.com/embed/"))
-                    { string video = videoLink.Substring(30); post.Video = video; }
-                    else { post.VideoLink = null; }
-                    if (post.Video == "") { post.Video = null; }
+                    string patternYouTube = @"^(?:https?\:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v\=))([\w-]{10,12})(?:[\&\?\#].*?)*?(?:[\&\?\#]t=([\d]+))?$";
+                    Regex regexYouTube = new Regex(patternYouTube);
+                    if (videoLink != null)
+                    {
+                        if (regexYouTube.IsMatch(videoLink))
+                        {
+                            Match match = Regex.Match(videoLink, patternYouTube);
+                            string video = match.Groups[1].ToString();
+                            string extOptions = match.Groups[2].ToString();
+                            if (extOptions == null || extOptions == "")
+                            { post.Video = video; }
+                            else { post.Video = video + "?start=" + extOptions; }
+                        }
+                        else
+                        {
+                            post.Video = null;
+                            post.VideoLink = null;
+                        }
+                    }
+
                     /////////////  video youtube feature end///////////
-
-
-
                     db.Posts.Add(post);                   
                     db.SaveChanges();
 
@@ -256,19 +267,35 @@ namespace BlogJuneMVC.Controllers
                 /////////////////////////////
                 /// /// // Video from youtube feature
                 string videoLink = post.VideoLink;
-                if (videoLink != null && videoLink.Contains("https://www.youtube.com/watch?v="))
-                { string video = videoLink.Substring(32); post.Video = video; }
-                else if (videoLink != null && videoLink.Contains("https://youtu.be/"))
-                { string video = videoLink.Substring(17); post.Video = video; }
-                else if (videoLink != null && videoLink.Contains("https://www.youtube.com/embed/"))
-                { string video = videoLink.Substring(30); post.Video = video; }
-                else
+                string patternYouTube = @"^(?:https?\:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v\=))([\w-]{10,12})(?:[\&\?\#].*?)*?(?:[\&\?\#]t=([\d]+))?$";
+                Regex regexYouTube = new Regex(patternYouTube);
+                if (videoLink != null)
                 {
-                    if (post.Video == null) { post.VideoLink = null; }
-                    else { post.VideoLink = "https://www.youtube.com/watch?v=" + post.Video; }
-                }
+                    if (regexYouTube.IsMatch(videoLink))
+                    {
+                        Match match = Regex.Match(videoLink, patternYouTube);
+                        string video = match.Groups[1].ToString();
+                        string extOptions = match.Groups[2].ToString();
+                        //if (!Regex.IsMatch(extOptions, @"^[0-9]+$")) { extOptions = null; } // This here means: if youtube time code of type is used - 6m40s -skip that
+                        if (extOptions == null || extOptions == "")
+                        { post.Video = video; }
+                        else
+                        {
+                            post.Video = video + "?start=" + extOptions;
+                        }
+                    }
+                    else
+                    {
+                        if (videoLink == "clear video") { post.Video = null; post.VideoLink = null; }
+                        else
+                        {
+                            if (post.Video == null) { post.VideoLink = null; }
+                            else { post.VideoLink = "https://www.youtube.com/watch?v=" + post.Video; }
 
-                if (post.Video == "") { post.Video = null; post.VideoLink = null; }
+                        }
+
+                    }
+                }
                 /////////////  video youtube feature end///////////
 
                 db.Entry(post).State = EntityState.Modified;
@@ -342,6 +369,36 @@ namespace BlogJuneMVC.Controllers
     }
 }
 
+// // /// My first Create POST method
+/// Video from youtube feature for Create POST method
+//string videoLink = post.VideoLink;
+//                    if (videoLink != null && videoLink.Contains("https://www.youtube.com/watch?v="))
+//                    { string video = videoLink.Substring(32); post.Video = video; }
+//                    else if (videoLink != null && videoLink.Contains("https://youtu.be/"))
+//                    { string video = videoLink.Substring(17); post.Video = video; }
+//                    else if (videoLink != null && videoLink.Contains("https://www.youtube.com/embed/"))
+//                    { string video = videoLink.Substring(30); post.Video = video; }
+//                    else { post.VideoLink = null; }
+//                    if (post.Video == "") { post.Video = null;  }
+// // ///  video from youtube feature
+
+//    //My first Edit Post Method
+//// old mine video link working:youtube feature for Edit POST method
+//string videoLink = post.VideoLink;
+//                if (videoLink != null && videoLink.Contains("https://www.youtube.com/watch?v="))
+//                { string video = videoLink.Substring(32); post.Video = video; }
+//                else if (videoLink != null && videoLink.Contains("https://youtu.be/"))
+//                { string video = videoLink.Substring(17); post.Video = video; }
+//                else if (videoLink != null && videoLink.Contains("https://www.youtube.com/embed/"))
+//                { string video = videoLink.Substring(30); post.Video = video; }
+//                else
+//                {
+//                    if (post.Video == null) { post.VideoLink = null; }
+//                    else { post.VideoLink = "https://www.youtube.com/watch?v=" + post.Video; }
+//                }
+
+//                if (post.Video == "") { post.Video = null; post.VideoLink = null; }
+// ///// end of video edit link
 
 
 //Post post = db.Posts.Include(p => p.Author).SingleOrDefault(p => p.Id == id);
