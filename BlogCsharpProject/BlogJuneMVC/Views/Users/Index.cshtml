@@ -23,14 +23,17 @@
             @Html.DisplayNameFor(model => model.UserName)
         </th>
         <th>
+            Photo
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.FirstName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.LastName)
         </th>
-        @*<th>
+        <th>
             @Html.DisplayNameFor(model => model.Email)
-        </th>*@
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Roles)
         </th>
@@ -40,6 +43,13 @@
 
     </tr>
 
+    @*<li>
+            @{
+                var imgUrl = Url.Content("~/images/users/" + User.Identity.GetUserName() + ".png") + "?time=" + DateTime.Now.ToString();
+            }
+            <img src="@imgUrl" alt="" class="img-circle" height="49" width="49" />
+        </li>*@
+
     @foreach (var item in Model)
     {
         <tr>
@@ -47,14 +57,18 @@
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
+                @{    var imgUrl = Url.Content("~/images/users/" + item.UserName + ".png"); }
+                <img src="@imgUrl" alt="" class="img-circle" height="43" width="43" />
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Email)
-            </td>*@
+            </td>
             <td>
                 @foreach (IdentityRole role in item.GetUserRoles())
                 {
@@ -63,16 +77,16 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-success" })
-			    @Html.ActionLink("Change Password", "EditUserPassword", new { id = item.Id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Change Password", "EditUserPassword", new { id = item.Id }, new { @class = "btn btn-warning" })
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
 
             </td>
         </tr>
-    }
+                    }
 
 </table>
 
 
 @*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
+        @Html.ActionLink("Create New", "Create")
+    </p>*@

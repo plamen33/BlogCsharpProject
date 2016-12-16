@@ -44,6 +44,14 @@
         <dd>
             @Html.DisplayFor(model => model.Date)
         </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tags)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tags)
+        </dd>
         <dt>
             <strong>Author</strong>
         </dt>
@@ -52,19 +60,20 @@
             @Html.DisplayFor(model => model.Author.UserName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Tags)
-        </dt>
+            @{    var imgUrl = Url.Content("~/images/users/" + Model.Author.UserName + ".png"); }
 
-        <dd>
-            @Html.DisplayFor(model => model.Tags)
-        </dd>
+            <img src="@imgUrl" alt="" class="img-circle" height="43" width="43" />
+        </dt>
+        <dd> &nbsp; </dd>
         @*  For Picture Added: *@
         <dt> &nbsp; </dt>
-        <dd> &nbsp; </dd>
+        <dd> &nbsp;<br /> </dd>
         <dt>
             Image
         </dt>
         <dd>
+            <br />
+
             @Html.Image("/images/posts/" + Model.Image)
 
             @*<img src="@Url.Content("/images/posts/" + Model.Image)" alt="[No Photo is Available for this post]" height="300"/>*@
