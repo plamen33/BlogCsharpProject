@@ -219,6 +219,7 @@ namespace BlogJuneMVC.Controllers
                 return HttpNotFound();
             }
             ViewBag.returnUrl = Request.UrlReferrer; // to return to page of Index
+            ViewBag.Categories = post.Categories;
             return View(post);
             
         }
@@ -302,6 +303,13 @@ namespace BlogJuneMVC.Controllers
                     }
                 }
                 /////////////  video youtube feature end///////////
+
+                // fix for specific Date non-catch issue exception
+                string date = post.Date.ToString();
+                string pattern = @"^(([0-9]{3})[\/\-\s](([0-9]{2})|([0-9]{1}))[\/\-\s](([0-9]{2})|([0-9]{1})))|((([0-9]{2})|([0-9]{1}))[\/\-\s]([0-9]{3})[\/\-\s](([0-9]{2})|([0-9]{1})))|((([0-9]{2})|([0-9]{1}))[\/\-\s](([0-9]{2})|([0-9]{1}))[\/\-\s]([0-9]{3}))";
+                Match matchDate = Regex.Match(date, pattern);
+                if (matchDate.Success)
+                { post.Date = DateTime.Now; }
 
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();

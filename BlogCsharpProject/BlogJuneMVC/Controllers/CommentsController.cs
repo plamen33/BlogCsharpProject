@@ -72,6 +72,7 @@ namespace BlogJuneMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
+        [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Text,PostId")] Comment comment)
         {
@@ -110,6 +111,7 @@ namespace BlogJuneMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
+        [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Text,PostId,Date")] Comment comment)
         {
