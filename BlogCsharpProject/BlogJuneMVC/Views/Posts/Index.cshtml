@@ -76,8 +76,8 @@
          @if (User.IsInRole("TrustedUser") && item.Author.UserName == User.Identity.GetUserName())
          {
            <td>
-               @Html.ActionLink("Edit ", "Edit", new { id = item.Id })
-               @Html.ActionLink(" Delete", "Delete", new { id = item.Id }, new { @style = "color:red;" })
+             @Html.ActionLink("Edit ", "Edit", new { id = item.Id }, new { @style = "color:brown;" })
+             @Html.ActionLink(" Delete", "Delete", new { id = item.Id }, new { @style = "color:coral;" })
            </td>
          }
        @if (User.IsInRole("Administrators"))

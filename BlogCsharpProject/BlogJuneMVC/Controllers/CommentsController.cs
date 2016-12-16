@@ -132,7 +132,7 @@ namespace BlogJuneMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Comments.Find(id);
+            Comment comment = db.Comments.Include(c => c.Post).SingleOrDefault(x => x.Id == id);
             if (comment == null)
             {
                 return HttpNotFound();

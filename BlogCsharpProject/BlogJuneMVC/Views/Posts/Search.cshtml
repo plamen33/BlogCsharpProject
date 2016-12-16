@@ -22,20 +22,20 @@
     }
 </p>
 
-    @if (Model.Count() == 0)
-    {
-        <div class="container">
-            <a href="#" title="Tag Search Tips" data-toggle="popover" data-placement="bottom" data-content="1. For optimal Tag Search results - use only one word, as a tag. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Tag Search is case insensitive.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3. Check out the 30 most popular Tags."></a>
-            &nbsp;
-            <a href="~/Posts/DisplayTags" class="btn btn-warning" role="button">Most Popular Tags</a>
-            &nbsp;
-           @if (User.IsInRole("TrustedUser") || User.IsInRole("Administrators"))
-           {  <a href="~/Posts/CategorySearch" class="btn btn-primary" role="button">Search By Category</a>}
-           
-        </div>
+@if (Model.Count() == 0)
+{
+    <div class="container">
+        <a href="#" title="Tag Search Tips" data-toggle="popover" data-placement="bottom" data-content="1. For optimal Tag Search results - use only one word, as a tag. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Tag Search is case insensitive.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3. Check out the 30 most popular Tags."></a>
+        &nbsp;
+        <a href="~/Posts/DisplayTags" class="btn btn-warning" role="button">Most Popular Tags</a>
+        &nbsp;
+        @if (User.IsInRole("TrustedUser") || User.IsInRole("Administrators"))
+        {  <a href="~/Posts/CategorySearch" class="btn btn-primary" role="button">Search By Category</a>}
+
+    </div>
         @section Scripts
       {
-        <script type="text/javascript">
+            <script type="text/javascript">
             $("[data-toggle='popover']").each(function () {
                 $(this).popover({
                     title: $(this).data("valMsgFor"),
@@ -44,19 +44,19 @@
                 .html("<p class='btn btn-success'>Tag Search Help</p>");
        }
              );
-        </script>
-     }
-    }
-    else
-    {
-        <div class="container">
-            <a href="#" title="Tag Search Tips" data-toggle="popover" data-placement="bottom" data-content="1. For optimal Tag Search results - use only one word, as a tag. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Check out the 30 most popular Tags."></a>
-            &nbsp;
-            <a href="~/Posts/DisplayTags" class="btn btn-warning" role="button">Most Popular Tags</a>
-            &nbsp;
-            @if (User.IsInRole("TrustedUser") || User.IsInRole("Administrators"))
-            {  <a href="~/Posts/CategorySearch" class="btn btn-primary" role="button">Search By Category</a>}
-        </div>
+            </script>
+        }
+}
+else
+{
+    <div class="container">
+        <a href="#" title="Tag Search Tips" data-toggle="popover" data-placement="bottom" data-content="1. For optimal Tag Search results - use only one word, as a tag. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Tag Search is case insensitive.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3. Check out the 30 most popular Tags."></a>
+        &nbsp;
+        <a href="~/Posts/DisplayTags" class="btn btn-warning" role="button">Most Popular Tags</a>
+        &nbsp;
+        @if (User.IsInRole("TrustedUser") || User.IsInRole("Administrators"))
+        {  <a href="~/Posts/CategorySearch" class="btn btn-primary" role="button">Search By Category</a>}
+    </div>
         @section Scripts
       {
             <script type="text/javascript">
@@ -153,4 +153,5 @@
 
         </table>
 
-    }
+}
+

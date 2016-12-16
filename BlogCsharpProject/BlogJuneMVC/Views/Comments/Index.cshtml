@@ -4,25 +4,30 @@
 @{
     ViewBag.Title = "Index";
 }
-
 <h2>All Comments</h2>
+
+@{
+    int n = 1;
+    n++;
+}
+<input type="hidden" name="counter" value="@n" /> @*needed to return to page of Index*@
 
 @if (User.IsInRole("TrustedUser") || User.IsInRole("Administrators"))
 {
-  <div class="text" width="30">
+    <div class="text" width="30">
 
-    @using (Html.BeginForm("", "Comments", FormMethod.Get))
-    {
-        <b>Search in Comments: &nbsp;&nbsp;</b>
-      
-        @Html.TextBox("search") <input type="submit" value="Search" size="14" px /><text>&nbsp;</text>
-        <a class="btn btn-default" href="@Url.Action("", "Comments")">Display All Comments</a>
-        <a href="#" title="About Comment Search" data-toggle="popover" data-placement="bottom" data-content="1. Search is only available for TrustedUsers and Administrators !&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Search engine includes only results in the comment's text."></a>
-    }
-  </div>
+        @using (Html.BeginForm("", "Comments", FormMethod.Get))
+        {
+            <b>Search in Comments: &nbsp;&nbsp;</b>
+
+            @Html.TextBox("search") <input type="submit" value="Search" size="14" px /><text>&nbsp;</text>
+            <a class="btn btn-default" href="@Url.Action("", "Comments")">Display All Comments</a>
+            <a href="#" title="About Comment Search" data-toggle="popover" data-placement="bottom" data-content="1. Search is only available for TrustedUsers and Administrators !&nbsp; 2. Search engine includes only results in the comment's text."></a>
+        }
+    </div>
     @section Scripts
    {
-       <script type="text/javascript">
+        <script type="text/javascript">
             $("[data-toggle='popover']").each(function () {
                 $(this).popover({
                     title: $(this).data("valMsgFor"),
@@ -31,9 +36,9 @@
                 .html("<p class='btn btn-info'> ? </p>");
             }
              );
-       </script>
-   }
-  <br />
+        </script>
+    }
+    <br />
 }
 <table class="table">
     <tr>
@@ -43,7 +48,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Text)
         </th>
-       
+
         <th>
             @Html.ActionLink("Date", "Index", new { sortBy = ViewBag.SortDateParameter })
             @*@Html.DisplayNameFor(model => model.Date)*@
@@ -52,39 +57,37 @@
         <th>Author</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-		    @BlogJuneMVC.Classes.Utils.CutText(item.Post.Title, 33)
-            @*@Html.DisplayFor(modelItem => item.Post.Title)*@
-        </td>
-        <td>
-		    @BlogJuneMVC.Classes.Utils.CutText(item.Text, 59)
-            @*@Html.DisplayFor(modelItem => item.Text)*@
-        </td>
-    
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @if (item.Author.UserName == User.Identity.GetUserName()|| User.IsInRole("Administrators"))
-            {
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning"})
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @BlogJuneMVC.Classes.Utils.CutText(item.Post.Title, 33)
+                @*@Html.DisplayFor(modelItem => item.Post.Title)*@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
 
-            }
-            @if (item.Author.UserName == User.Identity.GetUserName() || User.IsInRole("Administrators"))
-            {
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
-            }
-            @Html.ActionLink("Details", "Details", new {id = item.Id}, new {@class = "btn btn-success"})
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author.UserName)
-        </td>
-    </tr>
-}
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @if (item.Author.UserName == User.Identity.GetUserName() || User.IsInRole("Administrators"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning" })
+
+                }
+                @if (item.Author.UserName == User.Identity.GetUserName() || User.IsInRole("Administrators"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                }
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-success" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.UserName)
+            </td>
+        </tr>
+    }
 
 </table>
-
-
 @*btn btn-success*@
