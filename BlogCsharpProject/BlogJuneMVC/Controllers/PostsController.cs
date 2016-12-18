@@ -49,23 +49,28 @@ namespace BlogJuneMVC.Controllers
         // GET: Posts/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            try
+            { 
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    //Post post = db.Posts.Include(p => p.Author).SingleOrDefault(x => x.Id == id);
+			        Post post = db.Posts.Include(p => p.Author).Include(p => p.Comments).SingleOrDefault(x => x.Id == id);
+                    var comments = db.Comments.Include(p => p.Author).Where(cm => cm.PostId == post.Id).OrderByDescending(cm => cm.Date).ToList();
+                    post.Comments = comments;
+                    if (post == null)
+                    {
+                        return HttpNotFound();
+                    }
+			        post.Count = post.Count + 1;
+                    ViewBag.Player = post.Video;  // this option is needed to show and hide videos if null is in the video string
+                    db.SaveChanges();
+                    return View(post);
             }
-            //Post post = db.Posts.Include(p => p.Author).SingleOrDefault(x => x.Id == id);
-			Post post = db.Posts.Include(p => p.Author).Include(p => p.Comments).SingleOrDefault(x => x.Id == id);
-            var comments = db.Comments.Include(p => p.Author).Where(cm => cm.PostId == post.Id).OrderByDescending(cm => cm.Date).ToList();
-            post.Comments = comments;
-            if (post == null)
-            {
-                return HttpNotFound();
-            }
-			post.Count = post.Count + 1;
-            ViewBag.Player = post.Video;  // this option is needed to show and hide videos if null is in the video string
-            db.SaveChanges();
-            return View(post);
-        }
+            catch
+            { return RedirectToAction("Index"); }
+       }
          //GET: Search in Posts
         public ActionResult Search(string search, string TagSearch)
         {
@@ -235,89 +240,90 @@ namespace BlogJuneMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Title,Body,Category,Date,Tags,Image,Count,Categories,Video,VideoLink")] Post post, string returnUrl, HttpPostedFileBase upload)  // ", string returnUrl" neeeded to return to page number of Index
         {
-            if (ModelState.IsValid)
+            try
             {
-                /// edit photo - delete old add new
-                ///////////////////////////
-
-                if (upload != null && (upload.ContentLength > 0 && upload.ContentLength < 33000))
+                if (ModelState.IsValid)
                 {
-                    var fileExt = Path.GetExtension(upload.FileName); // put it here not to have issues
-                    if (fileExt.ToLower().EndsWith(".png") || fileExt.ToLower().EndsWith(".jpg") || fileExt.ToLower().EndsWith(".gif") || fileExt.ToLower().EndsWith(".jpeg"))// Important for security
+                    /// edit photo - delete old add new
+                    ///////////////////////////
+
+                    if (upload != null && (upload.ContentLength > 0 && upload.ContentLength < 33000))
                     {
-                        // delete old photo from System
-                        string oldFileName = post.Image;
-                        string deletePath = Request.MapPath("~/images/posts/" + oldFileName);
-                        if (System.IO.File.Exists(deletePath))
+                        var fileExt = Path.GetExtension(upload.FileName); // put it here not to have issues
+                        if (fileExt.ToLower().EndsWith(".png") || fileExt.ToLower().EndsWith(".jpg") || fileExt.ToLower().EndsWith(".gif") || fileExt.ToLower().EndsWith(".jpeg"))// Important for security
                         {
-                            System.IO.File.Delete(deletePath);
-                        }
+                            // delete old photo from System
+                            string oldFileName = post.Image;
+                            string deletePath = Request.MapPath("~/images/posts/" + oldFileName);
+                            if (System.IO.File.Exists(deletePath))
+                            {
+                                System.IO.File.Delete(deletePath);
+                            }
 
-                        var fileName = Path.GetFileName(upload.FileName);
-                        var newFileName = Guid.NewGuid() + fileName;
-                        var path = Path.Combine(Server.MapPath("~/images/posts/" + newFileName));
-                        if (!Directory.Exists(HttpContext.Server.MapPath("~/images/posts/")))
-                        {
-                            Directory.CreateDirectory(HttpContext.Server.MapPath("~/images/posts/"));
-                        }
-                        upload.SaveAs(path);
+                            var fileName = Path.GetFileName(upload.FileName);
+                            var newFileName = Guid.NewGuid() + fileName;
+                            var path = Path.Combine(Server.MapPath("~/images/posts/" + newFileName));
+                            if (!Directory.Exists(HttpContext.Server.MapPath("~/images/posts/")))
+                            {
+                                Directory.CreateDirectory(HttpContext.Server.MapPath("~/images/posts/"));
+                            }
+                            upload.SaveAs(path);
 
-                        post.Image = newFileName;
+                            post.Image = newFileName;
+                        }
                     }
-                }
-                /////////////////////////////
-                // // Tag hack fix:
-                string tag = post.Tags;
-                List<string> taglist2 = tag.Split(new char[] { ' ', '\r', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
-                post.Tags = string.Join(" ", taglist2).ToLower();
-                /// /// tag hack fix end
-                /// /// // Video from youtube feature
-                string videoLink = post.VideoLink;
-                string patternYouTube = @"^(?:https?\:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v\=))([\w-]{10,12})(?:[\&\?\#].*?)*?(?:[\&\?\#]t=([\d]+))?$";
-                Regex regexYouTube = new Regex(patternYouTube);
-                if (videoLink != null)
-                {
-                    if (regexYouTube.IsMatch(videoLink))
+                    /////////////////////////////
+                    // // Tag hack fix:
+                    string tag = post.Tags;
+                    List<string> taglist2 = tag.Split(new char[] { ' ', '\r', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
+                    post.Tags = string.Join(" ", taglist2).ToLower();
+                    /// /// tag hack fix end
+                    /// /// // Video from youtube feature
+                    string videoLink = post.VideoLink;
+                    string patternYouTube = @"^(?:https?\:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v\=))([\w-]{10,12})(?:[\&\?\#].*?)*?(?:[\&\?\#]t=([\d]+))?$";
+                    Regex regexYouTube = new Regex(patternYouTube);
+                    if (videoLink != null)
                     {
-                        Match match = Regex.Match(videoLink, patternYouTube);
-                        string video = match.Groups[1].ToString();
-                        string extOptions = match.Groups[2].ToString();
-                        //if (!Regex.IsMatch(extOptions, @"^[0-9]+$")) { extOptions = null; } // This here means: if youtube time code of type is used - 6m40s -skip that
-                        if (extOptions == null || extOptions == "")
-                        { post.Video = video; }
+                        if (regexYouTube.IsMatch(videoLink))
+                        {
+                            Match match = Regex.Match(videoLink, patternYouTube);
+                            string video = match.Groups[1].ToString();
+                            string extOptions = match.Groups[2].ToString();
+                            //if (!Regex.IsMatch(extOptions, @"^[0-9]+$")) { extOptions = null; } // This here means: if youtube time code of type is used - 6m40s -skip that
+                            if (extOptions == null || extOptions == "")
+                            { post.Video = video; }
+                            else
+                            {
+                                post.Video = video + "?start=" + extOptions;
+                            }
+                        }
                         else
                         {
-                            post.Video = video + "?start=" + extOptions;
-                        }
-                    }
-                    else
-                    {
-                        if (videoLink == "clear video") { post.Video = null; post.VideoLink = null; }
-                        else
-                        {
-                            if (post.Video == null) { post.VideoLink = null; }
-                            else { post.VideoLink = "https://www.youtube.com/watch?v=" + post.Video; }
+                            if (videoLink == "clear video") { post.Video = null; post.VideoLink = null; }
+                            else
+                            {
+                                if (post.Video == null) { post.VideoLink = null; }
+                                else { post.VideoLink = "https://www.youtube.com/watch?v=" + post.Video; }
+
+                            }
 
                         }
-
                     }
+                    /////////////  video youtube feature end///////////
+
+
+                    db.Entry(post).State = EntityState.Modified;
+                    db.SaveChanges();
+                    this.AddNotification("Post edited!", NotificationType.INFO);
+                    if (returnUrl == null || returnUrl == "") { return RedirectToAction("Index"); }
+                    return Redirect(returnUrl); // neeeded to return to page number of Index 
+                                                //return RedirectToAction("Index");
                 }
-                /////////////  video youtube feature end///////////
-
-                // fix for specific Date non-catch issue exception
-                string date = post.Date.ToString();
-                string pattern = @"^(([0-9]{3})[\/\-\s](([0-9]{2})|([0-9]{1}))[\/\-\s](([0-9]{2})|([0-9]{1})))|((([0-9]{2})|([0-9]{1}))[\/\-\s]([0-9]{3})[\/\-\s](([0-9]{2})|([0-9]{1})))|((([0-9]{2})|([0-9]{1}))[\/\-\s](([0-9]{2})|([0-9]{1}))[\/\-\s]([0-9]{3}))";
-                Match matchDate = Regex.Match(date, pattern);
-                if (matchDate.Success)
-                { post.Date = DateTime.Now; }
-
-                db.Entry(post).State = EntityState.Modified;
-                db.SaveChanges();
-                this.AddNotification("Post edited!", NotificationType.INFO);
-                if (returnUrl == null || returnUrl == "") { return RedirectToAction("Index"); }
-                return Redirect(returnUrl); // neeeded to return to page number of Index 
-                //return RedirectToAction("Index");
             }
+            catch {  this.AddNotification("Invalid Date format!", NotificationType.WARNING); return View(post); }  /// Date catch crash issue
+
+
+
             return View(post);
         }
 

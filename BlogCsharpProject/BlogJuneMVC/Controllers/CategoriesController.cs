@@ -10,6 +10,8 @@ using BlogJuneMVC.Extensions;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlogJuneMVC.Controllers
 {
@@ -37,6 +39,8 @@ namespace BlogJuneMVC.Controllers
         {
             if (ModelState.IsValid)
             {   
+                if(db.Categories.Any(cat=>cat.Name == category.Name))
+                { this.AddNotification("You cannot have multiple Categories with the same name ! Choose another name.", NotificationType.WARNING); return View(category); }
                 //Save category in DB
                 db.Categories.Add(category);
                 db.SaveChanges();
@@ -72,19 +76,26 @@ namespace BlogJuneMVC.Controllers
 
 
         [HttpPost]
+       
         public ActionResult Edit(Category category)
         {
-            if (ModelState.IsValid)
+            try { 
+                 if (ModelState.IsValid)
+                 {
+                  
+                         //Save user in db
+                         db.Entry(category).State = EntityState.Modified;
+                         db.SaveChanges();
+                
+                         // redirect to index page
+                         return RedirectToAction("Index");
+                   
+                 }
+               }
+            catch
             {
-             
-                    //Save user in db
-                    db.Entry(category).State = EntityState.Modified;
-                    db.SaveChanges();
-
-                    // redirect to index page
-                    return RedirectToAction("Index");
-              
-            }
+              this.AddNotification("You cannot have multiple Categories with the same name ! Choose another name.", NotificationType.WARNING); return View(category); 
+             }
             // If we got this far, something failed, redisplay form
             return View(category);
         }

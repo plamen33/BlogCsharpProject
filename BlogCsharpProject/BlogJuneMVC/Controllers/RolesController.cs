@@ -45,6 +45,8 @@ namespace BlogJuneMVC.Controllers
                         string roleLimited = role.Name.Substring(0, 33);
                         role.Name = roleLimited;
                     }
+                    if (db.Roles.Any(r => r.Name == role.Name))
+                    { this.AddNotification("You cannot have multiple Roles with the same name !", NotificationType.WARNING); }
                     db.Roles.Add(role);
                     db.SaveChanges();
                     ViewBag.ResultMessage = "Role created successfully !";
