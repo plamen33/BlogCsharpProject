@@ -61,11 +61,12 @@
     {
         <tr>
             <td>
-                @BlogJuneMVC.Classes.Utils.CutText(item.Post.Title, 33)
+                @BlogJuneMVC.Classes.Utils.CutText(item.Post.Title, 27)
                 @*@Html.DisplayFor(modelItem => item.Post.Title)*@
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Text)
+                @BlogJuneMVC.Classes.Utils.CutText(item.Text, 53)
+                @*@Html.DisplayFor(modelItem => item.Text)*@
             </td>
 
             <td>

@@ -98,6 +98,7 @@ namespace BlogJuneMVC.Controllers
             }
         }
         // GET: CategorySearch
+        [Authorize(Roles = "Administrators, TrustedUser")]
         public ActionResult CategorySearch(string Category, string search, CatSearchPostViewModel model)
         {
             model.Categories = db.Categories.OrderBy(c => c.Id).ToList();

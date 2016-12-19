@@ -39,7 +39,7 @@
     @foreach (var post in Model.posts)
     {
         <article class="post col-md-12">
-            <h2><a href="/Posts/Details/@post.Id">@BlogJuneMVC.Classes.Utils.CutText(post.Title, 33)</a></h2>
+            <h2><a href="/Posts/Details/@post.Id">@BlogJuneMVC.Classes.Utils.CutText(post.Title, 57)</a></h2>
             <div class="alert alert-default">
                 Posted on <i>@post.Date</i>
                 @if (post.Author != null)

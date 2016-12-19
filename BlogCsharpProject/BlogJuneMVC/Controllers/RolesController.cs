@@ -44,6 +44,7 @@ namespace BlogJuneMVC.Controllers
                     {
                         string roleLimited = role.Name.Substring(0, 33);
                         role.Name = roleLimited;
+                        this.AddNotification("Role name was shortened to 33 characters. !", NotificationType.WARNING);
                     }
                     if (db.Roles.Any(r => r.Name == role.Name))
                     { this.AddNotification("You cannot have multiple Roles with the same name !", NotificationType.WARNING); }
@@ -85,6 +86,7 @@ namespace BlogJuneMVC.Controllers
                     {
                         string roleLimited = role.Name.Substring(0, 33);
                         role.Name = roleLimited;
+                        this.AddNotification("Role name was shortened to 33 characters. !", NotificationType.WARNING);
                     }
 
                     db.Entry(role).State = System.Data.Entity.EntityState.Modified;
