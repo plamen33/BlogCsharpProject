@@ -210,8 +210,7 @@ namespace BlogJuneMVC.Controllers
         }
 
         // GET: Posts/Edit/5
-        // [Authorize(Roles = "Administrators")]
-        [Authorize]
+        [Authorize(Roles = "Administrators, TrustedUser")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -235,9 +234,7 @@ namespace BlogJuneMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateInput(false)]
-        //[Authorize(Roles = "Administrators")]
-        //[Authorize(Roles = "TrustedUser")]
-        [Authorize]
+        [Authorize(Roles = "Administrators, TrustedUser")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Title,Body,Category,Date,Tags,Image,Count,Categories,Video,VideoLink")] Post post, string returnUrl, HttpPostedFileBase upload)  // ", string returnUrl" neeeded to return to page number of Index
         {
@@ -329,9 +326,7 @@ namespace BlogJuneMVC.Controllers
         }
 
         // GET: Posts/Delete/5
-        //[Authorize(Roles = "Administrators")]
-        //[Authorize(Roles = "TrustedUser")]
-        [Authorize]
+        [Authorize(Roles = "Administrators, TrustedUser")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -348,9 +343,7 @@ namespace BlogJuneMVC.Controllers
         }
 
         // POST: Posts/Delete/
-        //[Authorize(Roles = "Administrators")]
-        //[Authorize(Roles = "TrustedUser")]
-        [Authorize]
+        [Authorize(Roles = "Administrators, TrustedUser")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id, string returnUrl) // ", string returnUrl" neeeded to return to page number of Index

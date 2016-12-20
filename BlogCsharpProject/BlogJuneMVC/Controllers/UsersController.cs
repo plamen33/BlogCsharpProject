@@ -224,7 +224,8 @@ namespace BlogJuneMVC.Controllers
 
         }
 
-		 // GET: /EditPassword
+        // GET: /EditPassword
+        [Authorize(Roles = "Administrators")]
         public ActionResult EditUserPassword(string id)
         {
             if (id == null)
@@ -238,6 +239,7 @@ namespace BlogJuneMVC.Controllers
         //
         // POST: /EditPassword
         [HttpPost]
+        [Authorize(Roles = "Administrators")]
         [ValidateAntiForgeryToken]
         public ActionResult EditUserPassword(ResetPasswordViewModel model)
         {
