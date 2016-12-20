@@ -9,14 +9,11 @@
 @{
     ViewBag.Title = "Index";
 }
-
 <h2>Index of Posts</h2>
 <div class="container">
     <a href="@Url.Action("Create", "Posts")"><span class="btn btn-default">Create New Post</span></a>
 </div>
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
+
 <br />
 
 <table height="407" width="1000" class="table">
@@ -31,65 +28,80 @@
             @Html.DisplayNameFor(model => model.FirstOrDefault().Category)
         </th>
         <th>
-            @Html.ActionLink("Date", "Index", new {sortBy = ViewBag.SortDateParameter })
+            @Html.ActionLink("Date", "Index", new { sortBy = ViewBag.SortDateParameter })
             @*@Html.DisplayNameFor(model => model.FirstOrDefault().Date)*@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Author)
         </th>
         <th>
+            Photo
+        </th>
+        <th>
             @Html.DisplayName("Actions")
         </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Comments)
+            </th>*@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            <a href="../../Posts/Details/@item.Id">@BlogJuneMVC.Classes.Utils.CutText(item.Title, 33)</a>
-            @*@BlogJuneMVC.Classes.Utils.CutText(item.Title, 33)*@
-            @*@Html.DisplayFor(modelItem => item.Title)*@
-        </td>
-        <td>
-           @BlogJuneMVC.Classes.Utils.CutText(item.Body, 70)
-             @*@Html.DisplayFor(modelItem => item.Body)*@
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category)
-        </td>
-        <td>
-            @item.Date.ToShortDateString()
-            @*@Html.DisplayFor(modelItem => item.Date)*@
-        </td>
-        <td>
-            @if (item.Author == null)
-            { <i>No Author</i> }
-            @Html.DisplayFor(modelItem => item.Author.UserName)
-        </td>
-      
-        <td>
-         
-            @Html.ActionLink("Details", "Details", new { id=item.Id })
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href="../../Posts/Details/@item.Id">@BlogJuneMVC.Classes.Utils.CutText(item.Title, 33)</a>
+                @*@BlogJuneMVC.Classes.Utils.CutText(item.Title, 33)*@
+                @*@Html.DisplayFor(modelItem => item.Title)*@
+            </td>
+            <td>
+                @BlogJuneMVC.Classes.Utils.CutText(item.Body, 127)
+                @*@Html.DisplayFor(modelItem => item.Body)*@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @item.Date.ToShortDateString()
+                @*@Html.DisplayFor(modelItem => item.Date)*@
+            </td>
+            <td>
+                @if (item.Author == null)
+                { <i>No Author</i> }
+                @Html.DisplayFor(modelItem => item.Author.UserName)
+            </td>
+            
+            <td>
+                @{    var imgUrl = Url.Content("~/images/users/" + item.Author.UserName + ".png"); }
+                <img src="@imgUrl" alt="" class="img-circle" height="43" width="43" />
+            </td>
            
-        </td> 
+            <td>
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    Actions
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="alert-warning">@Html.ActionLink("Details", "Details", new { id = item.Id })</li>
+                    @if (User.IsInRole("Administrators"))
+                    {
+               
+                        <li class="alert-warning">@Html.ActionLink("Edit ", "Edit", new { id = item.Id })</li>
+                                            <li class="alert-danger">@Html.ActionLink(" Delete", "Delete", new { id = item.Id })</li>
+                    }
+                    @if (User.IsInRole("TrustedUser") && item.Author.UserName == User.Identity.GetUserName())
+                    {
+                        <li class="alert-warning">@Html.ActionLink("Edit ", "Edit", new { id = item.Id })</li>
+                                            <li class="alert-danger">@Html.ActionLink(" Delete", "Delete", new { id = item.Id })</li>
+                    }
+                </ul>
+              </div>
+            </td>
+            
+        </tr>
+    }
 
-         @if (User.IsInRole("TrustedUser") && item.Author.UserName == User.Identity.GetUserName())
-         {
-           <td>
-             @Html.ActionLink("Edit ", "Edit", new { id = item.Id }, new { @style = "color:brown;" })
-             @Html.ActionLink(" Delete", "Delete", new { id = item.Id }, new { @style = "color:coral;" })
-           </td>
-         }
-       @if (User.IsInRole("Administrators"))
-       {
-           <td>
-               @Html.ActionLink("Edit ", "Edit", new { id = item.Id }, new { @style = "color:brown;" })
-               @Html.ActionLink(" Delete", "Delete", new { id = item.Id }, new { @style = "color:coral;" })
-               @*<span onclick="return confirm('Are you sure you want to delete this Role?')"><a href="/Roles/Delete?RoleName=@role.Name" class="delLink" style="color:burlywood;">Delete Role</a></span>*@
-           </td>
-       }
-    </tr>
-}
 
 </table>
 
@@ -97,6 +109,64 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortBy = Request["sortBy"] }))
 
- @*Explanations: sortBy = Request["sortBy"] - we have to pass the parameter sortBy so not to lose the sorting when going through pages*@
+@*Explanations: sortBy = Request["sortBy"] - we have to pass the parameter sortBy so not to lose the sorting when going through pages*@
+
+
+@*The  using statement for PagedList.Mvc gives access to the MVC helper for the paging buttons.*@ 
+@*The code uses an overload of BeginForm that allows it to specify FormMethod.Get.*@
+
+
+@* Explanations:  Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+@*The current page and total number of pages are displayed.*@
+@*If there are no pages to display, "Page 0 of 0" is shown. (In that case the page number is greater than the page count 
+because Model.PageNumber is 1, and Model.PageCount is 0.)*@
+
+
 
 @*@if (User.IsInRole("Administrator") || item.Author != null && User.Identity.Name == item.Author.UserName)*@
+
+
+
+
+@*great looking panel:*@
+
+@*<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+        Actions
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+        <li class="alert-warning">@Html.ActionLink("Details", "Details", new { id = item.Id })</li>
+        @if (User.IsInRole("Administrators"))
+        {
+
+            <li class="alert-warning">@Html.ActionLink("Edit ", "Edit", new { id = item.Id })</li>
+                                <li class="alert-danger">@Html.ActionLink(" Delete", "Delete", new { id = item.Id })</li>
+        }
+        @if (User.IsInRole("TrustedUser") && item.Author.UserName == User.Identity.GetUserName())
+        {
+            <li class="alert-warning">@Html.ActionLink("Edit ", "Edit", new { id = item.Id })</li>
+                                <li class="alert-danger">@Html.ActionLink(" Delete", "Delete", new { id = item.Id })</li>
+        }
+    </ul>
+</div>*@
+
+
+@*old looking panel:*@
+
+
+@*@Html.ActionLink("Details", "Details", new { id = item.Id })
+@if (User.IsInRole("TrustedUser") && item.Author.UserName == User.Identity.GetUserName())
+{
+
+    @Html.ActionLink("Edit ", "Edit", new { id = item.Id }, new { @style = "color:brown;" })
+    @Html.ActionLink(" Delete", "Delete", new { id = item.Id }, new { @style = "color:coral;" })
+
+}
+@if (User.IsInRole("Administrators"))
+{
+
+    @Html.ActionLink("Edit ", "Edit", new { id = item.Id }, new { @style = "color:brown;" })
+    @Html.ActionLink(" Delete", "Delete", new { id = item.Id }, new { @style = "color:coral;" })
+
+}*@

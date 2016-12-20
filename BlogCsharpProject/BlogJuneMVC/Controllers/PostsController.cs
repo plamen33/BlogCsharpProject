@@ -29,7 +29,7 @@ namespace BlogJuneMVC.Controllers
             var posts = db.Posts.AsQueryable();
             posts = posts.Include(p => p.Author);
             int pageSize = 10; // pageSize is 10 - we will see 10 posts on a page
-            int pageNumber = (page ?? 1); // means if the page is null use 1 or if not use whatever parameter page is
+            int pageNumber = (page ?? 1); // means if the page is null use 1 or if not use whatever parameter page is (null coalescing operator)
 
             switch (sortBy)
             {
@@ -92,7 +92,7 @@ namespace BlogJuneMVC.Controllers
             {
                 //var result = db.Posts.Where(p => p.Tags != "").ToList();
                 //return View(result);
-                var result = db.Posts.Where(p => p.Title.Equals("Title is empty")).ToList();
+                var result = db.Posts.Where(p => p.Title.Equals("1234567Title is empty1234567Bulgaria")).ToList();
                 return View(result);
 
             }
@@ -134,7 +134,7 @@ namespace BlogJuneMVC.Controllers
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "Id,Title,Body,Date")] Post post)
-        public ActionResult Create([Bind(Include = "Id,Title,Body,Category,Tags,Author,Count,Image,Categories,VideoLink")] Post post, HttpPostedFileBase upload, string returnUrl) // ", string returnUrl" neeeded to return to page number of Index
+        public ActionResult Create([Bind(Include = "Id,Title,Body,Category,Tags,Author,Categories,VideoLink")] Post post, HttpPostedFileBase upload, string returnUrl) // ", string returnUrl" neeeded to return to page number of Index
         {
             try
             {
@@ -181,8 +181,17 @@ namespace BlogJuneMVC.Controllers
                             string video = match.Groups[1].ToString();
                             string extOptions = match.Groups[2].ToString();
                             if (extOptions == null || extOptions == "")
-                            { post.Video = video; }
-                            else { post.Video = video + "?start=" + extOptions; }
+                            {
+                                post.Video = video;
+                                string videoLink1 = post.VideoLink;
+                                if (videoLink1.Length > 100) { post.VideoLink = null; }
+                            }
+                            else
+                            {
+                                post.Video = video + "?start=" + extOptions;
+                                string videoLink2 = post.VideoLink;
+                                if (videoLink2.Length > 100) { post.VideoLink = null; }
+                            }
                         }
                         else
                         {
@@ -289,10 +298,16 @@ namespace BlogJuneMVC.Controllers
                             string extOptions = match.Groups[2].ToString();
                             //if (!Regex.IsMatch(extOptions, @"^[0-9]+$")) { extOptions = null; } // This here means: if youtube time code of type is used - 6m40s -skip that
                             if (extOptions == null || extOptions == "")
-                            { post.Video = video; }
+                            {
+                                post.Video = video;
+                                string videoLink3 = post.VideoLink;
+                                if (videoLink3.Length > 100) { post.VideoLink = null; }
+                            }
                             else
                             {
                                 post.Video = video + "?start=" + extOptions;
+                                string videoLink4 = post.VideoLink;
+                                if (videoLink4.Length > 100) { post.VideoLink = null; }
                             }
                         }
                         else
