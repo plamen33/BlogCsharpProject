@@ -1,0 +1,108 @@
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\roslyn\csc.exe
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\roslyn\System.Collections.Immutable.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\roslyn\System.Reflection.Metadata.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\roslyn\vbc.exe
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\roslyn\VBCSCompiler.exe
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\roslyn\VBCSCompiler.exe.config
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\BlogJuneMVC.dll.config
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\BlogJuneMVC.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\BlogJuneMVC.pdb
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Antlr3.Runtime.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\EntityFramework.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\EntityFramework.SqlServer.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.AspNet.Identity.Core.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Security.Cookies.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Security.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Security.Facebook.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Security.Google.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Security.OAuth.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Security.Twitter.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Web.Infrastructure.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Newtonsoft.Json.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Owin.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\PagedList.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\PagedList.Mvc.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\System.Web.Helpers.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\System.Web.Mvc.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\System.Web.Optimization.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\System.Web.Razor.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\System.Web.WebPages.Deployment.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\System.Web.WebPages.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\System.Web.WebPages.Razor.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\WebGrease.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\PagedList.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\PagedList.Mvc.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\System.Web.Helpers.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\System.Web.Mvc.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\System.Web.Optimization.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\System.Web.Razor.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\System.Web.WebPages.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\System.Web.WebPages.Deployment.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\System.Web.WebPages.Razor.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Antlr3.Runtime.pdb
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Newtonsoft.Json.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\EntityFramework.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\EntityFramework.SqlServer.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.AspNet.Identity.Core.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Security.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Security.Facebook.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Security.Cookies.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Security.OAuth.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Security.Google.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Security.Twitter.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\obj\Debug\BlogJuneMVC.dll
+D:\Documents\2 Programming Projects\Visual Studio 2015\Projects\BlogCsharpProject\BlogJuneMVC\obj\Debug\BlogJuneMVC.pdb
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\csc.exe
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\System.Collections.Immutable.dll
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\System.Reflection.Metadata.dll
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\vbc.exe
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\VBCSCompiler.exe
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\VBCSCompiler.exe.config
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\bin\BlogJuneMVC.dll.config
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\bin\BlogJuneMVC.dll
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\bin\BlogJuneMVC.pdb
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\obj\Debug\BlogJuneMVC.dll
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\obj\Debug\BlogJuneMVC.pdb
+D:\Csharp blog course SoftTechJune 2016\GitHub\BlogCsharpProject\BlogJuneMVC\obj\Debug\BlogJuneMVC.csprojResolveAssemblyReference.cache
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\csc.exe
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\System.Collections.Immutable.dll
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\System.Reflection.Metadata.dll
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\vbc.exe
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\VBCSCompiler.exe
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\bin\roslyn\VBCSCompiler.exe.config
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\bin\BlogJuneMVC.dll.config
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\bin\BlogJuneMVC.dll
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\bin\BlogJuneMVC.pdb
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\obj\Debug\BlogJuneMVC.csprojResolveAssemblyReference.cache
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\obj\Debug\BlogJuneMVC.dll
+D:\CsharpBlog SoftTech\GitHub\BlogCsharpProject\BlogJuneMVC\obj\Debug\BlogJuneMVC.pdb
