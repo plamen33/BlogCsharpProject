@@ -1,9 +1,0 @@
-In the Practical Project Assignment we have this stated:
-Deliverables
-
-Don’t commit the libraries that can be automatically downloaded by the package manager
-(npm packages, composer packages, NuGet packages, maven packages).
-
-In any case for your convenience you can download the packages from this repository:
-
-https://github.com/plamen33/packages-for-BlogCsharpProject
