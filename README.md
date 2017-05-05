@@ -1,6 +1,6 @@
 **BlogCsharpProject**
 
-This is a Csharp project
+This project was written in C# using ASP.NET
 
 Functionalities:
 >1/ Posts create edit delete details
